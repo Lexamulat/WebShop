@@ -2,31 +2,28 @@ body {
     margin: 0;
 }
 
-
-/* .header {
-    background-color: darksalmon;
-    width: 100%;
-    height: 70%;
-    background-size: cover;
-} */
-
-
-/* #headImg {
-    background-size: cover;
-} */
-
 section {
-    height: 70vh;
-    width: 100%;
     position: relative;
-    background-color: lightgoldenrodyellow background-size: cover;
+    background-color: ivory;
 }
 
 .sect_1 {
+    height: 60vh;
     background: url(/static/images/burg5.jpg)no-repeat;
+    background-size: cover;
 }
 
+.sect_2 {
+    height: 30vh;
+}
 
-/* .sect_2 {
-    background-image: url(/static/images/bg.jpg);
-} */
+.one {
+    display: block;
+    margin: auto;
+}
+
+#redline {}
+
+.sect_3 {
+    height: 100vh;
+}
