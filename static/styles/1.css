@@ -1,16 +1,29 @@
 body {
-    margin: 0%;
+    margin: 0;
 }
 
-section {
-    height: 100vh;
-    position: relative;
+
+/* .header {
     background-color: darksalmon;
-    /* background-size: cover; */
+    width: 100%;
+    height: 70%;
+    background-size: cover;
+} */
+
+
+/* #headImg {
+    background-size: cover;
+} */
+
+section {
+    height: 70vh;
+    width: 100%;
+    position: relative;
+    background-color: lightgoldenrodyellow background-size: cover;
 }
 
 .sect_1 {
-    background: url(/static/images/burg3.jpg)100% 330% no-repeat;
+    background: url(/static/images/burg5.jpg)no-repeat;
 }
 
 
