@@ -1,29 +1,34 @@
 body {
+    padding: 0;
     margin: 0;
 }
 
-section {
+a {
+    text-decoration: none;
+}
+
+li {
+    text-decoration: none;
+    list-style: none;
+}
+
+.info_with_line {
+    height: 8vh;
+}
+
+.contact_info {
+    position: absolute;
+    width: 100%;
+    font-size: 170%;
+    top: 50%;
+}
+
+.centered {
     position: relative;
-    background-color: ivory;
-}
-
-.sect_1 {
-    height: 60vh;
-    background: url(/static/images/burg5.jpg)no-repeat;
-    background-size: cover;
-}
-
-.sect_2 {
-    height: 30vh;
-}
-
-.one {
-    display: block;
+    height: 10vh;
+    width: 60%;
     margin: auto;
-}
-
-#redline {}
-
-.sect_3 {
-    height: 100vh;
+    /* position: fixed;
+    left: 50%;
+    margin-left: -150px; */
 }
