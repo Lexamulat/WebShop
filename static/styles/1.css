@@ -12,6 +12,11 @@ li {
     list-style: none;
 }
 
+section {
+    height: 100vh;
+    position: relative;
+}
+
 .centered {
     display: flex;
     position: relative;
@@ -53,7 +58,7 @@ li {
 }
 
 .menu {
-    height: 10vh;
+    height: 8vh;
     text-align: center;
 }
 
@@ -81,4 +86,10 @@ li {
     .menu a.menuicon {
         display: block;
     }
+}
+
+.burger {
+    height: 68vh;
+    background-image: url(/static/images/burg.jpg);
+    background-size: cover;
 }
