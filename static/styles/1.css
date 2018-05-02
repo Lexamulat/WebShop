@@ -42,3 +42,43 @@ li {
 .line2 {
     flex: 1;
 }
+
+.logo {
+    height: 12vh;
+}
+
+.pict {
+    display: block;
+    margin: 0 auto;
+}
+
+.menu {
+    height: 10vh;
+    text-align: center;
+}
+
+.menu a {
+    color: black;
+    padding: 15px 35px;
+    font-size: 20px;
+}
+
+.menu a:hover {
+    color: red;
+    border-bottom: 2px solid red;
+    transition: .2s;
+}
+
+.menu .menuicon {
+    display: none;
+}
+
+@media screen and (max-width:768px) {
+    /* гребаный пробел после "and" очень важен */
+    .menu a {
+        display: none;
+    }
+    .menu a.menuicon {
+        display: block;
+    }
+}
