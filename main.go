@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	Mh "shop/handlers"
 
 	"github.com/gorilla/mux"
 )
@@ -21,14 +22,15 @@ func main() {
 	router := mux.NewRouter()
 
 	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
-	router.HandleFunc("/BMenu", Test).Methods("POST")
+	// router.HandleFunc("/BMenu", Test).Methods("POST")
 	//почему важно расположение функции??
+	router.HandleFunc("/BMenu", Mh.GetBMenu).Methods("POST")
+
 	router.PathPrefix("/static/").Handler(s)
 
 	router.HandleFunc("/", mainhandler).Methods("GET")
 
 	fmt.Println("test")
 	log.Fatal(http.ListenAndServe(":9999", router))
-	//
 
 }
