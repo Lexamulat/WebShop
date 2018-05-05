@@ -1,13 +1,15 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	MenuHandlers "shop/handlers"
+	MenuHandlers "shop/gocode/handlers"
 
 	"github.com/gorilla/mux"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func mainhandler(w http.ResponseWriter, r *http.Request) {
@@ -16,6 +18,14 @@ func mainhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	var err error
+
+	MenuHandlers.DB, err = sql.Open("sqlite3", "./shop.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer MenuHandlers.DB.Close()
+
 	router := mux.NewRouter()
 
 	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))

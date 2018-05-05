@@ -3,9 +3,8 @@
 // https://www.youtube.com/watch?v=5kAPExqSZ1I
 
 async function Request(url, postData) {
-    $.post(url, JSON.stringify(postData), function(data, textStatus) {
+    return $.post(url, JSON.stringify(postData), function(data, textStatus) {
         console.log("1")
-        return data;
     }, "json");
 }
 //THIS Asynchro function returns promise by @async function@ 
@@ -21,13 +20,15 @@ async function Request(url, postData) {
 //THIS synchro function returns promise by @return new Promise@ 
 
 async function WriteBmenu(BMenu) {
-    console.log("BMenu2");
+    console.log("WriteBmenu");
+    console.log(BMenu);
 
 }
 
 async function GetAndWriteAllContent() {
 
     const BMenu = await Request("BMenu");
+    await WriteBmenu(BMenu);
 
 
 }
