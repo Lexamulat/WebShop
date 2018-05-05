@@ -104,6 +104,43 @@ li {
     .menu a.menuicon {
         display: block;
     }
+    .card {
+        width: 20vh;
+        height: 40vh;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .card-img-top {
+        flex: 1;
+        /* width: 70%;
+        height: 50%;
+        margin: auto; */
+    }
+    .card-body {
+        flex: 2;
+        /* display: flex;
+        flex-direction: column;
+        line-height: 0.8; */
+        /* height: 50%;
+        padding: 0; */
+    }
+    .card-title {
+        /* padding: 0;
+        flex: 1; */
+        /* height: 30%;
+        width: 100%; */
+    }
+    /* .card-text .btn-primary */
+    .card-text {
+        /* flex: 1;
+        margin: auto; */
+    }
+    .btn-primary {
+        /* flex: 1;
+        margin: auto; */
+    }
 }
 
 .burger {
