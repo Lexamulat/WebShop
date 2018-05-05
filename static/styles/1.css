@@ -1,113 +1,126 @@
-    body {
-        padding: 0;
-        margin: 0;
-    }
-    
-    a {
-        text-decoration: none;
-    }
-    
-    li {
-        text-decoration: none;
-        list-style: none;
-    }
-    
-    section {
+body {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    text-decoration: none;
+    list-style: none;
+}
+
+.section_1 {
+    height: 100vh;
+    position: relative;
+}
+
+.widesection_2 {
+    width: 80%;
+    margin: auto;
+    height: 200vh;
+    position: relative;
+}
+
+
+/* look at me * height: 200vh; instead section {
         height: 100vh;
         position: relative;
-    }
-    
-    .CustomCentered {
-        display: flex;
-        position: relative;
-        height: 12vh;
-        width: 60%;
-        margin: auto;
-        justify-content: center;
-        flex-direction: column;
-    }
-    
-    .line1 {
-        flex: 2;
-        flex-direction: row;
-        display: flex;
-        /* start */
-        font-family: 'Times New Roman', Times, serif;
-        line-height: 1.0;
-        /* end */
-        /* This styles are conflic with @bootstrap.css@ */
-    }
-    
-    .address {
-        flex: 2;
-        margin: auto;
-        /*для выравн текста по середине*/
-    }
-    
-    .social {
-        flex: 1;
-        margin: auto;
-    }
-    
-    .line2 {
-        flex: 1;
-    }
-    
-    .logo {
-        height: 12vh;
-    }
-    
-    .pict {
-        display: block;
-        margin: 0 auto;
-    }
-    
-    .menu {
-        height: 8vh;
-        text-align: center;
-    }
-    
+    } */
+
+.CustomCentered {
+    display: flex;
+    position: relative;
+    height: 12vh;
+    width: 60%;
+    margin: auto;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.line1 {
+    flex: 2;
+    flex-direction: row;
+    display: flex;
+    /* start */
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.0;
+    /* end */
+    /* This styles are conflic with @bootstrap.css@ */
+}
+
+.address {
+    flex: 2;
+    margin: auto;
+    /*для выравн текста по середине*/
+}
+
+.social {
+    flex: 1;
+    margin: auto;
+}
+
+.line2 {
+    flex: 1;
+}
+
+.logo {
+    height: 14vh;
+}
+
+.pict {
+    display: block;
+    margin: 0 auto;
+}
+
+.menu {
+    height: 8vh;
+    text-align: center;
+}
+
+.menu a {
+    color: black;
+    padding: 15px 35px;
+    font-size: 20px;
+}
+
+.menu a:hover {
+    color: red;
+    border-bottom: 2px solid red;
+    transition: .2s;
+}
+
+.menu .menuicon {
+    display: none;
+}
+
+@media screen and (max-width:768px) {
+    /* Attention at the space after @and@ */
     .menu a {
-        color: black;
-        padding: 15px 35px;
-        font-size: 20px;
-    }
-    
-    .menu a:hover {
-        color: red;
-        border-bottom: 2px solid red;
-        transition: .2s;
-    }
-    
-    .menu .menuicon {
         display: none;
     }
-    
-    @media screen and (max-width:768px) {
-        /* Attention at the space after @and@ */
-        .menu a {
-            display: none;
-        }
-        .menu a.menuicon {
-            display: block;
-        }
+    .menu a.menuicon {
+        display: block;
     }
-    
-    .burger {
-        height: 68vh;
-        background-image: url(/static/images/burg.jpg);
-        background-size: cover;
-    }
-    
-    .menulogo {}
-    
-    .CenterTemplate {
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .card {
-        margin: 10px;
-    }
+}
+
+.burger {
+    height: 68vh;
+    background-image: url(/static/images/burg.jpg);
+    background-size: cover;
+}
+
+.menulogo {}
+
+.CenterTemplate {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    margin: 25px;
+}
