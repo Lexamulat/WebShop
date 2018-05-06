@@ -58,8 +58,8 @@ li {
 }
 
 .logo {
-    height: 20vh;
-    width: 30vh;
+    height: 17vh;
+    width: 25vh;
     margin: auto;
 }
 
@@ -92,7 +92,7 @@ li {
 }
 
 .burger {
-    height: 60vh;
+    height: 63vh;
     background-image: url(/static/images/burg.jpg);
     background-size: cover;
     position: relative;
