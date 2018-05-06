@@ -14,19 +14,12 @@ li {
 
 .section_1 {
     height: 100vh;
-    /* position: relative; */
 }
 
 .widesection_2 {
     height: 200vh;
     position: relative;
 }
-
-
-/* look at me * height: 200vh; instead section {
-        height: 100vh;
-        position: relative;
-    } */
 
 .CustomCentered {
     display: flex;
@@ -99,7 +92,7 @@ li {
 }
 
 .burger {
-    /* height: 68vh; */
+    height: 60vh;
     background-image: url(/static/images/burg.jpg);
     background-size: cover;
     position: relative;
