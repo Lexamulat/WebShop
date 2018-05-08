@@ -17,8 +17,8 @@ li {
 }
 
 .widesection_2 {
-    height: 200vh;
-    position: relative;
+    height: 100vh;
+    /* position: relative; */
 }
 
 .CustomCentered {
@@ -140,25 +140,25 @@ li {
     flex: 1;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     justify-content: space-between;
 }
 
 .btnblock a {
     color: white;
+    /* color: black; */
 }
 
 .leftbtn {
     flex: 1;
     margin: 2px;
-    vertical-align: middle;
-    /* margin: auto; */
+    padding: 0.08rem 0.8rem;
 }
 
 .rightbtn {
     flex: 1;
     margin: 2px;
-    vertical-align: middle;
-    /* margin: 0 5% auto; */
+    padding: 0.08rem 0.8rem;
 }
 
 @media screen and (max-width:769px) {
@@ -177,8 +177,10 @@ li {
     }
     .leftbtn {
         font-size: 3vw;
+        padding: 0.5rem;
     }
     .rightbtn {
         font-size: 3vw;
+        padding: 0.5rem;
     }
 }
