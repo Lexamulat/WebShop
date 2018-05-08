@@ -136,11 +136,32 @@ li {
     flex: 2;
 }
 
-.mybtn {
+.btnblock {
     flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-@media screen and (max-width:768px) {
+.btnblock a {
+    color: white;
+}
+
+.leftbtn {
+    flex: 1;
+    margin: 2px;
+    vertical-align: middle;
+    /* margin: auto; */
+}
+
+.rightbtn {
+    flex: 1;
+    margin: 2px;
+    vertical-align: middle;
+    /* margin: 0 5% auto; */
+}
+
+@media screen and (max-width:769px) {
     /* Attention at the space after @and@ */
     .menu a {
         display: none;
@@ -150,9 +171,14 @@ li {
     }
     .card {
         width: 90%;
-        /* height: 50vh; */
     }
     .card-body {
         font-size: 4vw;
+    }
+    .leftbtn {
+        font-size: 3vw;
+    }
+    .rightbtn {
+        font-size: 3vw;
     }
 }
