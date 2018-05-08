@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"database/sql"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	MenuHandlers "shop/gocode/handlers"
 
 	"github.com/gorilla/mux"
@@ -36,6 +38,35 @@ func main() {
 	router.PathPrefix("/static/").Handler(s)
 
 	fmt.Println("test")
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	// img
+	file, err := os.Open("static/images/burg.jpg")
+	if err != nil {
+		log.Fatal(err)
+	}
+	//open file
+	defer file.Close()
+	stat, err := file.Stat() // file size
+	if err != nil {
+		log.Fatal(err)
+	}
+	bs := make([]byte, stat.Size())
+	// read file into bytes
+	buffer := bufio.NewReader(file)
+	_, err = buffer.Read(bs) // <--------------- here!
+
+	if err != nil {
+		return
+	}
+	id := 1
+	_, err = MenuHandlers.DB.Exec("UPDATE BMenu SET img = ? WHERE id = ?",
+		bs, id)
+
+	if err == nil {
+		fmt.Println("gud")
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 	log.Fatal(http.ListenAndServe(":9999", router))
 
 }
