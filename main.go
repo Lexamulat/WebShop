@@ -65,6 +65,13 @@ func main() {
 	if err == nil {
 		fmt.Println("gud")
 	}
+	///////////////////////////////////////////
+	var name string
+	err = db.QueryRow("select img from BMenu where id = ?", 1).Scan(&name)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(name)
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	log.Fatal(http.ListenAndServe(":9999", router))
