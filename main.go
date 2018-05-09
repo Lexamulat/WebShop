@@ -2,9 +2,12 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"database/sql"
 	"fmt"
 	"html/template"
+	"image"
+	"image/jpeg"
 	"log"
 	"net/http"
 	"os"
@@ -82,6 +85,28 @@ func main() {
 
 	if err == nil {
 		fmt.Println("gud")
+	}
+	///////////////////////////////////////////////////////////
+	r := bytes.NewReader(bs2)
+	img, _, _ := image.Decode(r)
+
+	// img, _, _ := image.Decode(bytes.NewReader(bs2))
+
+	//save the imgByte to file
+	out, err := os.Create("./QRImg.jpg")
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	var opt jpeg.Options
+	opt.Quality = 80
+	// ok, write out the data into the new JPEG file
+
+	err = jpeg.Encode(out, img, &opt) // put quality to 80%
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	///////////////////////////////////////////////////////////
 	log.Fatal(http.ListenAndServe(":9999", router))
