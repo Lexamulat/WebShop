@@ -67,13 +67,23 @@ func main() {
 	}
 	///////////////////////////////////////////
 	var name string
-	err = db.QueryRow("select img from BMenu where id = ?", 1).Scan(&name)
+	err = MenuHandlers.DB.QueryRow("select img from BMenu where id = ?", 1).Scan(&name)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(name)
 
-	///////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+
+	bs2 := []byte(name)
+	id = 2
+	_, err = MenuHandlers.DB.Exec("UPDATE BMenu SET img = ? WHERE id = ?",
+		bs2, id)
+
+	if err == nil {
+		fmt.Println("gud")
+	}
+	///////////////////////////////////////////////////////////
 	log.Fatal(http.ListenAndServe(":9999", router))
 
 }
