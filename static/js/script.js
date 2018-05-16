@@ -23,6 +23,25 @@ async function WriteBmenu(BMenu) {
     console.log("WriteBmenu");
     console.log(BMenu);
 
+    let list = $(".MenuList")
+    list.empty()
+
+    for (let i = 0; i < BMenu.length; i++) {
+        const el = BMenu[i];
+
+        let listEl = `
+        <div class="card wow zoomIn" data-wow-duration="2s">
+            <img class="card-img-top " src="${el.Img}" alt="Card image cap ">
+            <div class="card-body ">
+                <h5 class="card-title ">${el.Name}</h5>
+                <p class="card-text ">${el.Description}</p>
+                <a href="# " class="mybtn btn btn-primary ">Go somewhere</a>
+            </div>
+        </div>
+       `
+
+        list.append(listEl)
+    }
 }
 
 async function GetAndWriteAllContent() {
@@ -39,6 +58,12 @@ function start() {
     GetAndWriteAllContent();
 
 
+}
+
+Image byteArrayToImage(byte[] byteArrayIn) {
+    MemoryStream ms = new MemoryStream(byteArrayIn);
+    Image returnImage = Image.FromStream(ms);
+    return returnImage;
 }
 
 $(document).ready(start)

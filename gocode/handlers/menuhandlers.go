@@ -12,9 +12,10 @@ var DB *sql.DB
 
 type BMenuStruct struct { //variables must begin with a capital
 	//letter, otherwise they can not be exported to main.go client(undifined)
-	Id          int    `json:"Id"`
+	ID          int    `json:"Id"`
 	Name        string `json:"Name"`
 	Description string `json:"Description"`
+	Img         []byte `json:"Img"`
 }
 
 func GetBMenu(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +27,7 @@ func GetBMenu(w http.ResponseWriter, r *http.Request) {
 	el := []BMenuStruct{}
 	var temp BMenuStruct
 	for rows.Next() {
-		rows.Scan(&temp.Id, &temp.Name, &temp.Description)
+		rows.Scan(&temp.ID, &temp.Name, &temp.Description, &temp.Img)
 		el = append(el, temp)
 	}
 	outJSON, _ := json.Marshal(el)
