@@ -15,8 +15,11 @@ import (
 )
 
 func mainhandler(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("static/html/start.html")
-	t.Execute(w, t)
+	tmpl, _ := template.ParseGlob("static/html/*.html")
+	err := tmpl.ExecuteTemplate(w, "start.html", nil)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {

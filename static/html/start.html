@@ -19,6 +19,7 @@
 </head>
 
 <body>
+ {{template "modals.html"}}
     <section class="section_1">
         <div class="CustomCentered">
             <div class="line1">
@@ -54,7 +55,7 @@
         <!-- There are strange problems with @wow.js@ effects all content is getting bigger -->
         <div class="BMenu">
             <div class="card wow zoomIn" data-wow-duration="2s">
-                <img class="card-img-top " src="/static/images/burg.jpg " alt="Card image cap">
+                <img class="card-img-top " src="/static/images/burg.jpg " data-toggle="modal" data-target="#exampleModalCenter" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title ">Card title</h5>
                     <p class="card-text ">Some quick example text to build p the bulk of the card's content.</p>
