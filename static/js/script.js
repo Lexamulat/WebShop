@@ -23,7 +23,7 @@ async function WriteBmenu(BMenu) {
     console.log("WriteBmenu");
     console.log(BMenu);
 
-    let list = $(".MenuList")
+    let list = $(".MenuList") // . means class | #means id
     list.empty()
 
     for (let i = 0; i < BMenu.length; i++) {
@@ -60,10 +60,6 @@ function start() {
 
 }
 
-Image byteArrayToImage(byte[] byteArrayIn) {
-    MemoryStream ms = new MemoryStream(byteArrayIn);
-    Image returnImage = Image.FromStream(ms);
-    return returnImage;
-}
+
 
 $(document).ready(start)
