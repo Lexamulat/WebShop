@@ -24,14 +24,14 @@ async function WriteBmenu(BMenu) {
     console.log(BMenu);
 
     let list = $(".MenuList") // . means class | #means id
-    list.empty()
+    list.empty();
 
     for (let i = 0; i < BMenu.length; i++) {
         const el = BMenu[i];
 
         let listEl = `
         <div class="card wow zoomIn" data-wow-duration="2s">
-            <img class="card-img-top " src="${el.Img}" alt="Card image cap ">
+            <img class="card-img-top " src=data:image/jpg;base64,${el.Img} alt="Card image cap ">
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
