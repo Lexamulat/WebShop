@@ -21,8 +21,17 @@ func mainhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("mycook")
-	fmt.Println(cookie, err)
+
+	fmt.Println("init")
+
+	_, err := r.Cookie("mycook2")
+
+	if err != nil {
+		http.Redirect(w, r, "/log", 301)
+	} else {
+		t, _ := template.ParseFiles("static/html/redact.html")
+		t.Execute(w, t)
+	}
 	// if (r.Method == "GET"){
 
 	// }
@@ -34,21 +43,19 @@ func GetCook(w http.ResponseWriter, r *http.Request) {
 	var cook http.Cookie
 	cook.Name = "mycook2"
 	cook.Value = "val2"
-	cook.Domain = "/"
+	cook.Path = "/"
 	http.SetCookie(w, &cook)
+	// fmt.Println(r.PostFormValue("log"))
+	// fmt.Println(r.PostFormValue("pass"))
 
 }
 
-func test1(w http.ResponseWriter, r *http.Request) {
+//take care of chrome cash
 
-	fmt.Println("get")
-}
+func Log(w http.ResponseWriter, r *http.Request) {
 
-func test2(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.PostFormValue("log"))
-	fmt.Println(r.PostFormValue("pass"))
-
-	fmt.Println("post")
+	t, _ := template.ParseFiles("static/html/log.html")
+	t.Execute(w, t)
 }
 
 func main() {
@@ -65,9 +72,9 @@ func main() {
 
 	router.HandleFunc("/", mainhandler).Methods("GET")
 	router.HandleFunc("/BMenu", MenuHandlers.GetBMenu).Methods("POST")
-	router.HandleFunc("/log", AdminPanel)
+	router.HandleFunc("/red", AdminPanel)
+	router.HandleFunc("/log", Log)
 	router.HandleFunc("/gc", GetCook)
-	router.HandleFunc("/t", test1).Methods("GET")
 
 	router.PathPrefix("/static/").Handler(s)
 
