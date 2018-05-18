@@ -31,7 +31,7 @@ async function WriteBmenu(BMenu) {
 
         let listEl = `
         <div class="card wow zoomIn" data-wow-duration="2s">
-            <img class="card-img-top " src=data:image/jpg;base64,${el.Img} alt="Card image cap ">
+            <img class="card-img-top " src="${el.ImgPath}" alt="img">
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
