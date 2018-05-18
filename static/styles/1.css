@@ -98,7 +98,7 @@ li {
 
 .burger {
     height: 63vh;
-    background-image: url(/static/images/burg.jpg);
+    background-image: url(/static/images/bigburg.jpg);
     background-size: cover;
     position: relative;
 }
