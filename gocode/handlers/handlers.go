@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -43,8 +44,6 @@ func Mainhandler(w http.ResponseWriter, r *http.Request) {
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Println("init")
-
 	_, err := r.Cookie("mycook2")
 
 	w.Header().Set("Cache-Control", "no-cache") //disable cache redirect
@@ -72,7 +71,28 @@ func GetCook(w http.ResponseWriter, r *http.Request) {
 //take care of chrome cash
 
 func Log(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("static/html/log.html")
+		t.Execute(w, t)
+	} else {
+		login := r.PostFormValue("log")
+		pass := r.PostFormValue("pass")
+		fmt.Println(login)
+		fmt.Println(pass)
+		//!TODO need to hash this data
 
-	t, _ := template.ParseFiles("static/html/log.html")
-	t.Execute(w, t)
+		var session string
+		err := DataBase.DB.QueryRow("select session from ClientsData where log = ? AND pass=?", login, pass).Scan(&session)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				fmt.Println("no-data")
+
+				http.Redirect(w, r, "/log", 302)
+			} else {
+				log.Fatal(err)
+			}
+		}
+
+		fmt.Println(session)
+	}
 }
