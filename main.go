@@ -25,7 +25,7 @@ func AdminPanel(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("init")
 
 	_, err := r.Cookie("mycook2")
-
+	w.Header().Set("Cache-Control", "no-cache")
 	if err != nil {
 		http.Redirect(w, r, "/log", 301)
 	} else {
