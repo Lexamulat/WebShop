@@ -25,18 +25,16 @@ func AdminPanel(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("init")
 
 	_, err := r.Cookie("mycook2")
-	w.Header().Set("Cache-Control", "no-cache")
+
+	w.Header().Set("Cache-Control", "no-cache") //disable cache redirect
+
 	if err != nil {
 		http.Redirect(w, r, "/log", 301)
 	} else {
 		t, _ := template.ParseFiles("static/html/redact.html")
 		t.Execute(w, t)
 	}
-	// if (r.Method == "GET"){
 
-	// }
-	// t, _ := template.ParseFiles("static/html/redact.html")
-	// t.Execute(w, t)
 }
 
 func GetCook(w http.ResponseWriter, r *http.Request) {
