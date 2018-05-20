@@ -56,8 +56,11 @@ func AdminPanel(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("session received from cookie dont found in db")
 			http.Redirect(w, r, "/log", 302)
 		} else {
-			t, _ := template.ParseFiles("static/html/redact.html")
-			t.Execute(w, t)
+			tmpl, _ := template.ParseGlob("static/html/*.html")
+			err := tmpl.ExecuteTemplate(w, "redact.html", nil)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 
