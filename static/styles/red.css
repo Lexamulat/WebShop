@@ -196,8 +196,7 @@ a.delete:hover {
 
 a.delete:active {
     background: rgb(223, 19, 19);
-    box-shadow: 0 3px rgb(223, 19, 19);
-    inset;
+    box-shadow: 0 3px rgb(223, 19, 19)inset;
 }
 
 .blue {
