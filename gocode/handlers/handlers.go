@@ -45,7 +45,7 @@ func Mainhandler(w http.ResponseWriter, r *http.Request) {
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache") //disable cache redirect
-	cook, err := r.Cookie("mycook2")
+	cook, err := r.Cookie("mycook")
 	if err != nil {
 		http.Redirect(w, r, "/log", 301)
 	} else {
@@ -79,15 +79,14 @@ func Log(w http.ResponseWriter, r *http.Request) {
 		err := DataBase.DB.QueryRow("select session from ClientsData where log = ? AND pass=?", login, pass).Scan(&session)
 		if err != nil {
 			if err == sql.ErrNoRows {
-				fmt.Println("no-data")
-
+				fmt.Println("incorrect log or pass")
 				http.Redirect(w, r, "/log", 302)
 			} else {
 				log.Fatal(err)
 			}
 		}
 
-		Session.SetMyCook(w)
+		Session.SetMyCook(w, login)
 		http.Redirect(w, r, "/red", 302)
 	}
 }
