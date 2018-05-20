@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	DataBase "shop/gocode/db"
+	Session "shop/gocode/session"
 )
 
 type BMenuStruct struct { //variables must begin with a capital
@@ -43,32 +44,26 @@ func Mainhandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {
-
-	_, err := r.Cookie("mycook2")
-
 	w.Header().Set("Cache-Control", "no-cache") //disable cache redirect
-
+	cook, err := r.Cookie("mycook2")
 	if err != nil {
 		http.Redirect(w, r, "/log", 301)
 	} else {
-		t, _ := template.ParseFiles("static/html/redact.html")
-		t.Execute(w, t)
+
+		var session string
+		err = DataBase.DB.QueryRow("select session from ClientsData where session = ?", cook.Value).Scan(&session)
+		if err == sql.ErrNoRows {
+			fmt.Println("session received from cookie dont found in db")
+			http.Redirect(w, r, "/log", 302)
+		} else {
+			t, _ := template.ParseFiles("static/html/redact.html")
+			t.Execute(w, t)
+		}
 	}
 
 }
 
-func GetCook(w http.ResponseWriter, r *http.Request) {
-	var cook http.Cookie
-	cook.Name = "mycook2"
-	cook.Value = "val2"
-	cook.Path = "/"
-	http.SetCookie(w, &cook)
-	// fmt.Println(r.PostFormValue("log"))
-	// fmt.Println(r.PostFormValue("pass"))
-
-}
-
-//take care of chrome cash
+//take care of chrome cash cache
 
 func Log(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
@@ -77,8 +72,7 @@ func Log(w http.ResponseWriter, r *http.Request) {
 	} else {
 		login := r.PostFormValue("log")
 		pass := r.PostFormValue("pass")
-		fmt.Println(login)
-		fmt.Println(pass)
+
 		//!TODO need to hash this data
 
 		var session string
@@ -93,6 +87,7 @@ func Log(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		fmt.Println(session)
+		Session.SetMyCook(w)
+		http.Redirect(w, r, "/red", 302)
 	}
 }

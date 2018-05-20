@@ -21,7 +21,6 @@ func main() {
 	router.HandleFunc("/BMenu", Handlers.GetBMenu).Methods("POST")
 	router.HandleFunc("/red", Handlers.AdminPanel)
 	router.HandleFunc("/log", Handlers.Log)
-	router.HandleFunc("/gc", Handlers.GetCook)
 
 	router.PathPrefix("/static/").Handler(s)
 
