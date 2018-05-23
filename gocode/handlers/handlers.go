@@ -35,6 +35,14 @@ func GetBMenu(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(outJSON))
 
 }
+func Test(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseGlob("static/html/*.html")
+	err := tmpl.ExecuteTemplate(w, "test.html", nil)
+	if err != nil {
+		panic(err)
+	}
+
+}
 func Mainhandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseGlob("static/html/*.html")
 	err := tmpl.ExecuteTemplate(w, "start.html", nil)

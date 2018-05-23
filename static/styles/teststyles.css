@@ -1,0 +1,51 @@
+.cd-nav-trigger {
+    transition: transform 0.5s;
+}
+
+.navigation-is-open .cd-nav-trigger {
+    /* rotate trigger when navigation becomes visible */
+    transform: rotate(180deg);
+}
+
+.cd-nav-trigger .cd-nav-icon::before,
+.cd-nav-trigger .cd-nav-icon:after {
+    /* upper and lower lines of the menu icon */
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s, width 0.5s, top 0.3s;
+}
+
+.cd-nav-trigger .cd-nav-icon::before {
+    transform-origin: right top;
+    transform: translateY(-6px);
+}
+
+.cd-nav-trigger .cd-nav-icon::after {
+    transform-origin: right bottom;
+    transform: translateY(6px);
+}
+
+.navigation-is-open .cd-nav-trigger .cd-nav-icon::after,
+.navigation-is-open .cd-nav-trigger .cd-nav-icon::before {
+    /* animate arrow --> from hamburger to arrow */
+    width: 50%;
+    transition: transform 0.5s, width 0.5s;
+}
+
+.navigation-is-open .cd-nav-trigger .cd-nav-icon::before {
+    transform: rotate(45deg);
+}
+
+.navigation-is-open .cd-nav-trigger .cd-nav-icon::after {
+    transform: rotate(-45deg);
+}
+
+.cd-nav-trigger circle {
+    /* circle border animation */
+    transition: stroke-dashoffset 0.4s 0s;
+}
+
+.navigation-is-open .cd-nav-trigger circle {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.4s 0.3s;
+}
