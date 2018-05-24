@@ -37,7 +37,7 @@ func GetBMenu(w http.ResponseWriter, r *http.Request) {
 }
 func Test(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseGlob("static/html/*.html")
-	err := tmpl.ExecuteTemplate(w, "test2.html", nil)
+	err := tmpl.ExecuteTemplate(w, "test.html", nil)
 	if err != nil {
 		panic(err)
 	}
