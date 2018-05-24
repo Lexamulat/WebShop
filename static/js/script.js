@@ -52,11 +52,29 @@ async function GetAndWriteAllContent() {
 
 }
 
+function animate(elem) {
+    var effect = elem.data("effect");
+    elem.addClass("animated " + effect).one(animationEnd, function() {
+        elem.removeClass("animated" + effect);
+    });
+
+}
+
+
+
 function start() {
+
+
+
 
     console.log("start");
     GetAndWriteAllContent();
 
+
+
+    $(".menuicon").click(function() {
+        animate($(".ModelContent"));
+    });
 
 }
 
