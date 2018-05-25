@@ -296,7 +296,3 @@ a.delete:active {
     line-height: 1.165em;
     font-family: inherit;
 }
-
-.close:hover {
-    background: #00d9ff;
-}

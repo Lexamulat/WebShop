@@ -39,18 +39,15 @@
 </div>
 
 <!-- TOP MENU -->
-
+<!-- MY CUSTOM MODAl -->
 <div id="openModal" class="modalDialog">
-    <!-- wow wobble -->
     <div class="ModelContent" data-effect="wobble">
         <a href="#" class="menupoint">О нас</a>
         <a href="#" class="menupoint">Доставка</a>
         <a href="#" class="menupoint">Акции</a>
         <a href="#" class="menupoint">пункт4</a>
-        <!-- <a href="#close" title="Закрыть" class="close">X</a> -->
         <div>
-            <a href="#"><img class="menupoint animated bounceIn infinite" wigth="50vh" height="50vh" src="/static/images/exit.png"></a>
-
+            <a href=""><img aria-label="Close" class="menupoint animated bounceIn infinite" wigth="50vh" height="50vh" src="/static/images/exit.png"></a>
         </div>
 
 
@@ -59,4 +56,39 @@
     </div>
 
 
+</div>
+
+<!-- EDIT -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Редактирование позиции</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Название:</label>
+                        <input id="EditName" type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Описание:</label>
+                        <textarea id="EditDescription" class="form-control" id="message-text"></textarea>
+                    </div>
+
+                    <form id="upload" runat="server">
+                        <input type='file' id="imgInp" />
+                        <img id="picture" src="#" />
+                    </form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal">Отмена</button>
+                <button type="button" id="MODEDIT" class="btn btn-primary btn-success" data-dismiss="modal">Сохранить</button>
+            </div>
+        </div>
+    </div>
 </div>

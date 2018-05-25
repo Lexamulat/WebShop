@@ -30,16 +30,16 @@ async function WriteBmenu(BMenu) {
         const el = BMenu[i];
 
         let listEl = `
-        <div class="card wow zoomIn" data-wow-duration="2s">
+        <div class="card wow zoomIn" data-wow-duration="2s" >
             <img class="card-img-top " src="${el.ImgPath}" alt="img">
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
-                <a href="# " class="mybtn btn btn-primary ">Go somewhere</a>
-            </div>
+                <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' >Go somewhere</a>
+                </div>
         </div>
        `
-
+            // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important 
         list.append(listEl)
     }
 }
@@ -75,6 +75,20 @@ function start() {
     $(".menuicon").click(function() {
         animate($(".ModelContent"));
     });
+
+
+    $('#exampleModal').on('show.bs.modal', function(event) {
+        let button = $(event.relatedTarget)
+        let EditingName = button.data('name')
+        console.log("EditingName")
+        console.log(EditingName)
+        let EditingDescription = button.data('description')
+
+
+        $(this).find('#EditName').val(EditingName)
+        $(this).find('#EditDescription').val(EditingDescription)
+
+    })
 
 }
 
