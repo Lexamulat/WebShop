@@ -35,11 +35,12 @@ async function WriteBmenu(BMenu) {
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
-                <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' >Go somewhere</a>
+                <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
                 </div>
         </div>
        `
             // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important 
+            // !! data-'all in lowercase'
         list.append(listEl)
     }
 }
@@ -83,10 +84,12 @@ function start() {
         console.log("EditingName")
         console.log(EditingName)
         let EditingDescription = button.data('description')
+        let EditingPicture = button.data('img')
 
 
         $(this).find('#EditName').val(EditingName)
         $(this).find('#EditDescription').val(EditingDescription)
+        $("#picture").attr("src", EditingPicture)
 
     })
 
