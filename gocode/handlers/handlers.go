@@ -5,10 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	DataBase "shop/gocode/db"
 	Session "shop/gocode/session"
+
+	"github.com/buger/jsonparser"
 )
 
 type BMenuStruct struct { //variables must begin with a capital
@@ -49,6 +52,29 @@ func Mainhandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+}
+func Edit(w http.ResponseWriter, r *http.Request) {
+
+	bodyBytes, _ := ioutil.ReadAll(r.Body)
+
+	idmod, err := jsonparser.GetInt(bodyBytes, "id")
+	if err != nil {
+		fmt.Println("err id")
+	}
+	namemod, err := jsonparser.GetString(bodyBytes, "name")
+	if err != nil {
+		fmt.Println("err name")
+	}
+	description, err := jsonparser.GetString(bodyBytes, "description")
+	if err != nil {
+		fmt.Println("err desc")
+	}
+	picture, err := jsonparser.GetString(bodyBytes, "picture")
+	if err != nil {
+		fmt.Println("err pict")
+	}
+	fmt.Println("init")
+	fmt.Println(idmod, namemod, description, picture)
 }
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {

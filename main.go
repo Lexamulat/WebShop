@@ -22,6 +22,7 @@ func main() {
 	router.HandleFunc("/red", Handlers.AdminPanel)
 	router.HandleFunc("/log", Handlers.Log)
 	router.HandleFunc("/test", Handlers.Test)
+	router.HandleFunc("/edit", Handlers.Edit)
 
 	router.PathPrefix("/static/").Handler(s)
 
