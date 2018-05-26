@@ -7,7 +7,7 @@
 //         console.log("1")
 //     }, "json");
 // }
-//THIS Asynchro function returns promise by @async function@ 
+//THIS Asynchro function returns promise by @async function@
 
 function Request(url, postData) {
     return new Promise(resolve => {
@@ -17,7 +17,7 @@ function Request(url, postData) {
         }, "json");
     });
 }
-//THIS synchro function returns promise by @return new Promise@ 
+//THIS synchro function returns promise by @return new Promise@
 
 async function WriteBmenu(BMenu) {
     console.log("WriteBmenu");
@@ -39,7 +39,7 @@ async function WriteBmenu(BMenu) {
                 </div>
         </div>
        `
-            // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important 
+            // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important
             // !! data-'all in lowercase'
         list.append(listEl)
     }
@@ -64,53 +64,43 @@ function animate(elem) {
 
 
 async function EDIT() {
-
-    console.log("edit")
-
     let out = {
         id: $('#exampleModal').data("id"),
         name: $("#EditName").val(),
         description: $("#EditDescription").val(),
         picture: picture.getAttribute('src')
     }
-
     let res = await Request("edit", out)
-    console.log(res)
-    var x = document.getElementById("SucseesSnackbar");
-
-    // Add the "show" class to DIV
+    console.log(res);
+    if (res == "0") {
+        var x = document.getElementById("ErrorSnackbar")
+    } else {
+        var x = document.getElementById("SucseesSnackbar")
+    }
+    //Add the "show" class to DIV
     x.className = "show";
-
     // After 3 seconds, remove the show class from DIV
     setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
-    // if (res) {
-    //     LAB.toast("Успешно")
-    // } else {
-    //     LAB.toast("Ошибка доабвления")
-    // }
 }
 
 
 async function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function(e) {
             $('#picture').attr('src', e.target.result);
-            console.log(e.target.result)
         }
-
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-function start() {
+async function start() {
 
 
 
 
     console.log("start");
-    GetAndWriteAllContent();
+    await GetAndWriteAllContent();
 
 
 
