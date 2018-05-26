@@ -18,14 +18,14 @@ func SaveImg(picture string) (string, error) {
 	// fmt.Println(picture)
 	unbased, err := base64.StdEncoding.DecodeString(cutstr)
 	if err != nil {
-		fmt.Println("err with decode")
-		log.Fatal(err)
-
+		fmt.Println("err with base 64decode")
+		// TODO sometimes @illegal base64 data at input byte 30@
+		return "zero", err
 	}
 	res := bytes.NewReader(unbased)
 	jpgI, err := jpeg.Decode(res)
 	if err != nil {
-		fmt.Println("err with decode")
+		fmt.Println("err with reader")
 		log.Fatal(err)
 
 	}
@@ -49,6 +49,7 @@ func SaveImg(picture string) (string, error) {
 
 	err = jpeg.Encode(out, jpgI, &opt)
 	if err != nil {
+		fmt.Println("err with Encode")
 		fmt.Println(err)
 
 	}

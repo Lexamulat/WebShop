@@ -86,6 +86,7 @@ func BurgAdd(w http.ResponseWriter, r *http.Request) {
 
 func Edit(w http.ResponseWriter, r *http.Request) {
 
+	affected := int64(0)
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
 
 	id, err := jsonparser.GetInt(bodyBytes, "id")
@@ -149,12 +150,13 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	imgPath, err := SupportPackage.SaveImg(picture)
 	if err != nil {
 		fmt.Println(err)
-
+		fmt.Fprintf(w, strconv.Itoa(int(affected)))
+		return
 	}
 	fmt.Println(name, description, imgPath, id)
 	result, err := DataBase.DB.Exec("UPDATE BMenu SET name=?, description=? , imgPath=?  WHERE id=?",
 		name, description, imgPath, strconv.Itoa(int(id)))
-	affected := int64(0)
+
 	if err == nil {
 		affected, _ = result.RowsAffected()
 	}
