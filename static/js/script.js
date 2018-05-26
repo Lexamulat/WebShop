@@ -66,7 +66,14 @@ function animate(elem) {
 
 
 
-
+window.onscroll = () => {
+        let b = document.getElementsByClassName("basket")[0]
+        b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
+    }
+    () => {
+        let b = document.getElementsByClassName("basket")[0]
+        b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
+    }
 
 
 
