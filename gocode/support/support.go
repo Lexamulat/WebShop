@@ -2,11 +2,14 @@ package support
 
 import (
 	"bytes"
+	"database/sql"
 	"encoding/base64"
 	"fmt"
 	"image/jpeg"
 	"log"
+	"net/http"
 	"os"
+	DataBase "shop/gocode/db"
 	MyRand "shop/gocode/myrand"
 	"strings"
 )
@@ -54,4 +57,15 @@ func SaveImg(picture string) (string, error) {
 
 	}
 	return imgPath, err
+}
+
+func AccessCookieСheck(cook *http.Cookie) bool {
+	var session string
+	err := DataBase.DB.QueryRow("select session from ClientsData where session = ?", cook.Value).Scan(&session)
+	if err == sql.ErrNoRows {
+		fmt.Println("session received from cookie dont found in db")
+		return false
+	}
+	return true
+
 }

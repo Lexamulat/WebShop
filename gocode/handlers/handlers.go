@@ -54,22 +54,18 @@ func AdminPanel(w http.ResponseWriter, r *http.Request) {
 	cook, err := r.Cookie("mycook")
 	if err != nil {
 		http.Redirect(w, r, "/log", 301)
+		return
+	}
+	HaveAccessFlg := SupportPackage.AccessCookieСheck(cook)
+	if HaveAccessFlg == false {
+		http.Redirect(w, r, "/log", 301)
 	} else {
-
-		var session string
-		err = DataBase.DB.QueryRow("select session from ClientsData where session = ?", cook.Value).Scan(&session)
-		if err == sql.ErrNoRows {
-			fmt.Println("session received from cookie dont found in db")
-			http.Redirect(w, r, "/log", 302)
-		} else {
-			tmpl, _ := template.ParseGlob("static/html/*.html")
-			err := tmpl.ExecuteTemplate(w, "redact.html", nil)
-			if err != nil {
-				panic(err)
-			}
+		tmpl, _ := template.ParseGlob("static/html/*.html")
+		err := tmpl.ExecuteTemplate(w, "redact.html", nil)
+		if err != nil {
+			panic(err)
 		}
 	}
-
 }
 
 //take care of chrome cache
