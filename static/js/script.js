@@ -80,7 +80,7 @@ async function GetAndWriteAllContent() {
 
 
 }
-
+//animate menu for mobiles
 function animate(elem) {
     var effect = elem.data("effect");
     elem.addClass("animated " + effect).one(animationEnd, function() {
@@ -90,25 +90,30 @@ function animate(elem) {
     });
 }
 
-// async function MENUADD() {
-//     let out = {
-//         name: $("#AddName").val(),
-//         description: $("#AddDescription").val(),
-//         picture: picture.getAttribute('src')
-//     }
-//     let res = await Request("BurgAdd", out)
-//     console.log(res);
-//     if (res == "0") {
-//         var x = document.getElementById("ErrorSnackbar")
-//     } else {
-//         var x = document.getElementById("SucseesSnackbar")
-//     }
-//     //Add the "show" class to DIV
-//     x.className = "show";
-//     // After 3 seconds, remove the show class from DIV
-//     setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
-//     await GetAndWriteAllContent();
-// }
+async function MENUADD() {
+    let out = {
+            name: $("#AddName").val(),
+            description: $("#AddDescription").val(),
+            picture: pictureForAddBurgsModal.getAttribute('src')
+        }
+        //We need to clean info in modal window 
+    document.getElementById("AddName").value = "";
+    document.getElementById("AddDescription").value = "";
+
+    let res = await Request("BurgAdd", out)
+        // document.getElementById("pictureForAddBurgsModal").setAttribute('src', "#");
+    console.log(res);
+    if (res == "0") {
+        var x = document.getElementById("ErrorSnackbar")
+    } else {
+        var x = document.getElementById("SucseesSnackbar")
+    }
+    //Add the "show" class to DIV
+    x.className = "show";
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+    await GetAndWriteAllContent();
+}
 
 async function EDIT() {
     let out = {
@@ -132,16 +137,32 @@ async function EDIT() {
 }
 
 
-async function readURL(input) {
+async function readURLEdit(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
             $('#picture').attr('src', e.target.result);
-            console.log(e.target.result)
         }
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+async function readURLAdd(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(t) {
+            $('#pictureForAddBurgsModal').attr('src', t.target.result);
+            // console.log()
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+
+
+
+
 
 async function start() {
 
@@ -174,12 +195,15 @@ async function start() {
 
 
     $("#imgInp").change(async function() {
-        await readURL(this);
+        await readURLEdit(this);
+    });
+    $("#imgInpForAddBurgsModal").change(async function() {
+        await readURLAdd(this);
     });
 
 
     $("#MENUEDIT").click(EDIT)
-        // $("#MENUADD").click(MENUADD)
+    $("#MENUADD").click(MENUADD)
 }
 
 
