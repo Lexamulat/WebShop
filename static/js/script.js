@@ -35,7 +35,7 @@ async function WriteBmenu(BMenu) {
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
-                <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
+                <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#editModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
                 </div>
         </div>
        `
@@ -59,13 +59,12 @@ function animate(elem) {
     elem.addClass("animated " + effect).one(animationEnd, function() {
         elem.removeClass("animated" + effect);
     });
-
 }
 
 
 async function EDIT() {
     let out = {
-        id: $('#exampleModal').data("id"),
+        id: $('#editModal').data("id"),
         name: $("#EditName").val(),
         description: $("#EditDescription").val(),
         picture: picture.getAttribute('src')
@@ -81,6 +80,7 @@ async function EDIT() {
     x.className = "show";
     // After 3 seconds, remove the show class from DIV
     setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+    await GetAndWriteAllContent();
 }
 
 
@@ -109,7 +109,7 @@ async function start() {
     });
 
 
-    $('#exampleModal').on('show.bs.modal', function(event) {
+    $('#editModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget)
         let EditingId = button.data('id')
         console.log(EditingId)
@@ -123,8 +123,6 @@ async function start() {
         $("#picture").attr("src", EditingPicture)
         $(this).data('id', EditingId)
         console.log("end")
-
-
     })
 
 
