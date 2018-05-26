@@ -96,93 +96,124 @@ func Log(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func Basket(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("static/html/basket.html")
+	t.Execute(w, t)
+}
+
 func BurgAdd(w http.ResponseWriter, r *http.Request) {
-	affected := int64(0)
-	bodyBytes, _ := ioutil.ReadAll(r.Body)
-
-	name, err := jsonparser.GetString(bodyBytes, "name")
+	cook, err := r.Cookie("mycook")
 	if err != nil {
-		fmt.Println("err name")
-	}
-	description, err := jsonparser.GetString(bodyBytes, "description")
-	if err != nil {
-		fmt.Println("err desc")
-	}
-	picture, err := jsonparser.GetString(bodyBytes, "picture")
-	if err != nil {
-		fmt.Println("err pict")
-	}
-
-	imgPath, err := SupportPackage.SaveImg(picture)
-	if err != nil {
-		fmt.Fprintf(w, strconv.Itoa(int(affected)))
+		http.Redirect(w, r, "/log", 301)
 		return
 	}
-	result, err := DataBase.DB.Exec("INSERT INTO BMenu (name,description,imgPath) VALUES(?,?,?)", name, description, imgPath)
+	HaveAccessFlg := SupportPackage.AccessCookieСheck(cook)
+	if HaveAccessFlg == false {
+		http.Redirect(w, r, "/log", 301)
+	} else {
+		affected := int64(0)
+		bodyBytes, _ := ioutil.ReadAll(r.Body)
 
-	if err == nil {
+		name, err := jsonparser.GetString(bodyBytes, "name")
+		if err != nil {
+			fmt.Println("err name")
+		}
+		description, err := jsonparser.GetString(bodyBytes, "description")
+		if err != nil {
+			fmt.Println("err desc")
+		}
+		picture, err := jsonparser.GetString(bodyBytes, "picture")
+		if err != nil {
+			fmt.Println("err pict")
+		}
 
-		affected, _ = result.RowsAffected()
+		imgPath, err := SupportPackage.SaveImg(picture)
+		if err != nil {
+			fmt.Fprintf(w, strconv.Itoa(int(affected)))
+			return
+		}
+		result, err := DataBase.DB.Exec("INSERT INTO BMenu (name,description,imgPath) VALUES(?,?,?)", name, description, imgPath)
+
+		if err == nil {
+
+			affected, _ = result.RowsAffected()
+		}
+
+		fmt.Fprintf(w, strconv.Itoa(int(affected)))
 	}
-
-	fmt.Fprintf(w, strconv.Itoa(int(affected)))
-
 }
 
 func Edit(w http.ResponseWriter, r *http.Request) {
-
-	affected := int64(0)
-	bodyBytes, _ := ioutil.ReadAll(r.Body)
-
-	id, err := jsonparser.GetInt(bodyBytes, "id")
+	cook, err := r.Cookie("mycook")
 	if err != nil {
-		fmt.Println("err id")
-
-	}
-	name, err := jsonparser.GetString(bodyBytes, "name")
-	if err != nil {
-		fmt.Println("err name")
-	}
-	description, err := jsonparser.GetString(bodyBytes, "description")
-	if err != nil {
-		fmt.Println("err desc")
-	}
-	picture, err := jsonparser.GetString(bodyBytes, "picture")
-	if err != nil {
-		fmt.Println("err pict")
-	}
-
-	imgPath, err := SupportPackage.SaveImg(picture)
-	if err != nil {
-		fmt.Println(err)
-		fmt.Fprintf(w, strconv.Itoa(int(affected)))
+		http.Redirect(w, r, "/log", 301)
 		return
 	}
+	HaveAccessFlg := SupportPackage.AccessCookieСheck(cook)
+	if HaveAccessFlg == false {
+		http.Redirect(w, r, "/log", 301)
+	} else {
+		affected := int64(0)
+		bodyBytes, _ := ioutil.ReadAll(r.Body)
 
-	result, err := DataBase.DB.Exec("UPDATE BMenu SET name=?, description=? , imgPath=?  WHERE id=?",
-		name, description, imgPath, strconv.Itoa(int(id)))
+		id, err := jsonparser.GetInt(bodyBytes, "id")
+		if err != nil {
+			fmt.Println("err id")
 
-	if err == nil {
-		affected, _ = result.RowsAffected()
+		}
+		name, err := jsonparser.GetString(bodyBytes, "name")
+		if err != nil {
+			fmt.Println("err name")
+		}
+		description, err := jsonparser.GetString(bodyBytes, "description")
+		if err != nil {
+			fmt.Println("err desc")
+		}
+		picture, err := jsonparser.GetString(bodyBytes, "picture")
+		if err != nil {
+			fmt.Println("err pict")
+		}
+
+		imgPath, err := SupportPackage.SaveImg(picture)
+		if err != nil {
+			fmt.Println(err)
+			fmt.Fprintf(w, strconv.Itoa(int(affected)))
+			return
+		}
+
+		result, err := DataBase.DB.Exec("UPDATE BMenu SET name=?, description=? , imgPath=?  WHERE id=?",
+			name, description, imgPath, strconv.Itoa(int(id)))
+
+		if err == nil {
+			affected, _ = result.RowsAffected()
+		}
+		fmt.Fprintf(w, strconv.Itoa(int(affected)))
 	}
-	fmt.Fprintf(w, strconv.Itoa(int(affected)))
 }
 
 func BurgDel(w http.ResponseWriter, r *http.Request) {
-
-	bodyBytes, _ := ioutil.ReadAll(r.Body)
-
-	id, err := jsonparser.GetInt(bodyBytes, "id")
+	cook, err := r.Cookie("mycook")
 	if err != nil {
-		fmt.Println("err id")
+		http.Redirect(w, r, "/log", 301)
+		return
 	}
-	res, err := DataBase.DB.Exec("DELETE FROM BMenu WHERE id = ?", strconv.Itoa(int(id)))
+	HaveAccessFlg := SupportPackage.AccessCookieСheck(cook)
+	if HaveAccessFlg == false {
+		http.Redirect(w, r, "/log", 301)
+	} else {
+		bodyBytes, _ := ioutil.ReadAll(r.Body)
 
-	if err != nil {
-		log.Fatal(err)
+		id, err := jsonparser.GetInt(bodyBytes, "id")
+		if err != nil {
+			fmt.Println("err id")
+		}
+		res, err := DataBase.DB.Exec("DELETE FROM BMenu WHERE id = ?", strconv.Itoa(int(id)))
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		affected, _ := res.RowsAffected()
+		fmt.Fprintf(w, strconv.Itoa(int(affected)))
 	}
-
-	affected, _ := res.RowsAffected()
-	fmt.Fprintf(w, strconv.Itoa(int(affected)))
-
 }
