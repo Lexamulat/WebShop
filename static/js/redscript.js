@@ -34,8 +34,6 @@ function PushToast(res) {
 
 async function WriteBmenu(BMenu) {
     console.log("WriteBmenu");
-    console.log(BMenu);
-
     let list = $(".BurgsMenu") // . means class | #means id
     list.empty();
 
@@ -57,33 +55,6 @@ async function WriteBmenu(BMenu) {
         list.append(listEl)
     }
 }
-
-// async function WriteSubMenu(BMenu) {
-//     console.log("WriteBmenu");
-//     console.log(BMenu);
-
-//     let list = $(".SubMenu") // . means class | #means id
-//     list.empty();
-
-//     for (let i = 0; i < BMenu.length; i++) {
-//         const el = BMenu[i];
-
-//         let listEl = `
-//             <div class="card wow zoomIn" data-wow-duration="2s" >
-//                 <img class="card-img-top " src="${el.ImgPath}" alt="img">
-//                 <div class="card-body ">
-//                     <h5 class="card-title ">${el.Name}</h5>
-//                     <p class="card-text ">${el.Description}</p>
-//                     <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#editModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
-//                     </div>
-//             </div>
-//            `
-//             // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important
-//             // !! data-'all in lowercase'
-//         list.append(listEl)
-//     }
-// }
-
 
 async function GetAndWriteAllContent() {
 
@@ -135,8 +106,10 @@ async function EDIT() {
 
 async function MENUDELETE() {
     let out = {
-        id: $('#delModal').data("id"),
+        id: $('#delModal').data("id")
     }
+
+    console.log(out)
     let res = await Request("BurgDel", out)
     console.log(res);
     if (res == "0") {
@@ -206,6 +179,13 @@ async function start() {
         $(this).find('#EditDescription').val(EditingDescription)
         $("#picture").attr("src", EditingPicture)
         $(this).data('id', EditingId)
+    })
+    $('#delModal').on('show.bs.modal', function(event) {
+        let button = $(event.relatedTarget)
+        let EditingId = button.data('id')
+        $(this).data('id', EditingId) // !! this method didnt rewrite data
+            //!! $(this).attr('aaaaaaaaaaaaaaaaa', "aaaaaaaaaaaaaa")
+            //!! this method will rewrite data
     })
 
 

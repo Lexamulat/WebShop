@@ -247,9 +247,6 @@ li {
     position: absolute;
     width: 100%;
     height: 4.5em;
-}
-
-.basket {
     transition: color .15s ease-out, border .15s ease-out, opacity .15s ease-out, background .15s ease-out;
     position: absolute;
     transition: top 1s ease-out;
