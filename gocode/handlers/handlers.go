@@ -13,7 +13,9 @@ import (
 	"net/http"
 	"os"
 	DataBase "shop/gocode/db"
+	MyRand "shop/gocode/myrand"
 	Session "shop/gocode/session"
+	"strconv"
 	"strings"
 
 	"github.com/buger/jsonparser"
@@ -62,11 +64,12 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
 
-	idmod, err := jsonparser.GetInt(bodyBytes, "id")
+	id, err := jsonparser.GetInt(bodyBytes, "id")
 	if err != nil {
 		fmt.Println("err id")
+
 	}
-	namemod, err := jsonparser.GetString(bodyBytes, "name")
+	name, err := jsonparser.GetString(bodyBytes, "name")
 	if err != nil {
 		fmt.Println("err name")
 	}
@@ -79,16 +82,34 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("err pict")
 	}
 	fmt.Println("init")
-	fmt.Println(idmod, namemod, description)
+
 	fmt.Println("-----")
 	coI := strings.Index(string(picture), ",") //eraise  from data:image/jpeg;base64,/9j/4AAQSkZJRgAB.....
 	cutstr := string(picture)[coI+1:]          // @data:image/jpeg;base64,@
 	// cutstr := picture[23:] the other way to eraise @data:image/jpeg;base64,@
 	// fmt.Println(picture)
-	unbased, _ := base64.StdEncoding.DecodeString(cutstr)
+	unbased, err := base64.StdEncoding.DecodeString(cutstr)
+	if err != nil {
+		fmt.Println("err with decode")
+		log.Fatal(err)
+
+	}
 	res := bytes.NewReader(unbased)
-	jpgI, _ := jpeg.Decode(res)
-	out, err := os.Create("static/images/myimg.jpg")
+	jpgI, err := jpeg.Decode(res)
+	if err != nil {
+		fmt.Println("err with decode")
+		log.Fatal(err)
+
+	}
+	//generate random name for img
+	generatedImgName, err := MyRand.GenerateRandomString(16)
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	imgPath := "static/images/" + generatedImgName + ".jpg"
+	out, err := os.Create(imgPath)
 
 	if err != nil {
 		fmt.Println(err)
@@ -96,14 +117,22 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	}
 	var opt jpeg.Options
 	opt.Quality = 100
-	// ok, write out the data into the new JPEG file
+	//  write out the data into the new JPEG file
 
 	err = jpeg.Encode(out, jpgI, &opt)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
+	fmt.Println(name, description, imgPath, id)
+	result, err := DataBase.DB.Exec("UPDATE BMenu SET name=?, description=? , imgPath=?  WHERE id=?",
+		name, description, imgPath, strconv.Itoa(int(id)))
+	affected := int64(0)
+	if err == nil {
+		affected, _ = result.RowsAffected()
+	}
+	fmt.Fprintf(w, strconv.Itoa(int(affected)))
+	// /static/images/bigtasty.jpg
 }
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {

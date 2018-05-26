@@ -45,6 +45,7 @@ async function WriteBmenu(BMenu) {
     }
 }
 
+
 async function GetAndWriteAllContent() {
 
     const BMenu = await Request("BMenu");
@@ -74,6 +75,19 @@ async function EDIT() {
     }
 
     let res = await Request("edit", out)
+    console.log(res)
+    var x = document.getElementById("SucseesSnackbar");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+    // if (res) {
+    //     LAB.toast("Успешно")
+    // } else {
+    //     LAB.toast("Ошибка доабвления")
+    // }
 }
 
 
