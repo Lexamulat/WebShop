@@ -41,20 +41,6 @@ async function WriteBmenu(BMenu) {
                 </div>
             </div>
         `
-
-
-        //     let listEl = `
-        //     <div class="card wow zoomIn" data-wow-duration="2s" >
-        //         <img class="card-img-top " src="${el.ImgPath}" alt="img">
-        //         <div class="card-body ">
-        //             <h5 class="card-title ">${el.Name}</h5>
-        //             <p class="card-text ">${el.Description}</p>
-        //             <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#editModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
-        //             </div>
-        //     </div>
-        //    `
-        // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important
-        // !! data-'all in lowercase'
         list.append(listEl)
     }
 }
@@ -90,7 +76,7 @@ async function GetAndWriteAllContent() {
 
     const BMenu = await Request("BMenu");
     await WriteBmenu(BMenu);
-    await WriteSubMenu(BMenu);
+    // await WriteSubMenu(BMenu);
 
 
 }
@@ -102,6 +88,25 @@ function animate(elem) {
     });
 }
 
+// async function MENUADD() {
+//     let out = {
+//         name: $("#AddName").val(),
+//         description: $("#AddDescription").val(),
+//         picture: picture.getAttribute('src')
+//     }
+//     let res = await Request("BurgAdd", out)
+//     console.log(res);
+//     if (res == "0") {
+//         var x = document.getElementById("ErrorSnackbar")
+//     } else {
+//         var x = document.getElementById("SucseesSnackbar")
+//     }
+//     //Add the "show" class to DIV
+//     x.className = "show";
+//     // After 3 seconds, remove the show class from DIV
+//     setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+//     await GetAndWriteAllContent();
+// }
 
 async function EDIT() {
     let out = {
@@ -130,6 +135,7 @@ async function readURL(input) {
         var reader = new FileReader();
         reader.onload = function(e) {
             $('#picture').attr('src', e.target.result);
+            console.log(e.target.result)
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -144,7 +150,7 @@ async function start() {
     await GetAndWriteAllContent();
 
 
-
+    // Animate mobile menu
     $(".menuicon").click(function() {
         animate($(".ModelContent"));
     });
@@ -153,17 +159,15 @@ async function start() {
     $('#editModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget)
         let EditingId = button.data('id')
-        console.log(EditingId)
         let EditingName = button.data('name')
         let EditingDescription = button.data('description')
         let EditingPicture = button.data('img')
 
-        console.log(this)
+
         $(this).find('#EditName').val(EditingName)
         $(this).find('#EditDescription').val(EditingDescription)
         $("#picture").attr("src", EditingPicture)
         $(this).data('id', EditingId)
-        console.log("end")
     })
 
 
@@ -173,6 +177,7 @@ async function start() {
 
 
     $("#MENUEDIT").click(EDIT)
+        // $("#MENUADD").click(MENUADD)
 }
 
 

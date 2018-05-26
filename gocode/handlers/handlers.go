@@ -1,22 +1,17 @@
 package handlers
 
 import (
-	"bytes"
 	"database/sql"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"image/jpeg"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	DataBase "shop/gocode/db"
-	MyRand "shop/gocode/myrand"
 	Session "shop/gocode/session"
+	SupportPackage "shop/gocode/support"
 	"strconv"
-	"strings"
 
 	"github.com/buger/jsonparser"
 )
@@ -60,6 +55,35 @@ func Mainhandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 }
+
+func BurgAdd(w http.ResponseWriter, r *http.Request) {
+	bodyBytes, _ := ioutil.ReadAll(r.Body)
+
+	name, err := jsonparser.GetString(bodyBytes, "name")
+	if err != nil {
+		fmt.Println("err name")
+	}
+	description, err := jsonparser.GetString(bodyBytes, "description")
+	if err != nil {
+		fmt.Println("err desc")
+	}
+	picture, err := jsonparser.GetString(bodyBytes, "picture")
+	if err != nil {
+		fmt.Println("err pict")
+	}
+	fmt.Println("init")
+	fmt.Println(err, name, description, picture)
+	// result, err := DataBase.DB.Exec("INSERT INTO BMenu (name,description,imgPath) VALUES(?,?,?)", idsubcat, name_mod, price, description, picture)
+	// affected := int64(0)
+	// if err == nil {
+
+	// 	affected, _ = result.RowsAffected()
+	// }
+
+	// fmt.Fprintf(w, strconv.Itoa(int(affected)))
+
+}
+
 func Edit(w http.ResponseWriter, r *http.Request) {
 
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
@@ -81,48 +105,51 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("err pict")
 	}
-	fmt.Println("init")
+	// coI := strings.Index(string(picture), ",") //eraise  from data:image/jpeg;base64,/9j/4AAQSkZJRgAB.....
+	// cutstr := string(picture)[coI+1:]          // @data:image/jpeg;base64,@
+	// // cutstr := picture[23:] the other way to eraise @data:image/jpeg;base64,@
+	// // fmt.Println(picture)
+	// unbased, err := base64.StdEncoding.DecodeString(cutstr)
+	// if err != nil {
+	// 	fmt.Println("err with decode")
+	// 	log.Fatal(err)
 
-	fmt.Println("-----")
-	coI := strings.Index(string(picture), ",") //eraise  from data:image/jpeg;base64,/9j/4AAQSkZJRgAB.....
-	cutstr := string(picture)[coI+1:]          // @data:image/jpeg;base64,@
-	// cutstr := picture[23:] the other way to eraise @data:image/jpeg;base64,@
-	// fmt.Println(picture)
-	unbased, err := base64.StdEncoding.DecodeString(cutstr)
-	if err != nil {
-		fmt.Println("err with decode")
-		log.Fatal(err)
+	// }
+	// res := bytes.NewReader(unbased)
+	// jpgI, err := jpeg.Decode(res)
+	// if err != nil {
+	// 	fmt.Println("err with decode")
+	// 	log.Fatal(err)
 
-	}
-	res := bytes.NewReader(unbased)
-	jpgI, err := jpeg.Decode(res)
-	if err != nil {
-		fmt.Println("err with decode")
-		log.Fatal(err)
+	// }
+	// //generate random name for img
+	// generatedImgName, err := MyRand.GenerateRandomString(16)
 
-	}
-	//generate random name for img
-	generatedImgName, err := MyRand.GenerateRandomString(16)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+	// imgPath := "static/images/" + generatedImgName + ".jpg"
+	// out, err := os.Create(imgPath)
 
+	// if err != nil {
+	// 	fmt.Println(err)
+
+	// }
+	// var opt jpeg.Options
+	// opt.Quality = 100
+	// //  write out the data into the new JPEG file
+
+	// err = jpeg.Encode(out, jpgI, &opt)
+	// if err != nil {
+	// 	fmt.Println(err)
+
+	// }
+
+	imgPath, err := SupportPackage.SaveImg(picture)
 	if err != nil {
 		fmt.Println(err)
-		os.Exit(1)
-	}
-	imgPath := "static/images/" + generatedImgName + ".jpg"
-	out, err := os.Create(imgPath)
 
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	var opt jpeg.Options
-	opt.Quality = 100
-	//  write out the data into the new JPEG file
-
-	err = jpeg.Encode(out, jpgI, &opt)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
 	}
 	fmt.Println(name, description, imgPath, id)
 	result, err := DataBase.DB.Exec("UPDATE BMenu SET name=?, description=? , imgPath=?  WHERE id=?",

@@ -24,6 +24,8 @@ func main() {
 	router.HandleFunc("/test", Handlers.Test)
 	router.HandleFunc("/edit", Handlers.Edit)
 
+	router.HandleFunc("/BurgAdd", Handlers.BurgAdd).Methods("POST")
+
 	router.PathPrefix("/static/").Handler(s)
 
 	fmt.Println("test")
