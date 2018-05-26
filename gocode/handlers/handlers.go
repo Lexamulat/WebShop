@@ -1,13 +1,17 @@
 package handlers
 
 import (
+	"bytes"
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"image/jpeg"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	DataBase "shop/gocode/db"
 	Session "shop/gocode/session"
 
@@ -74,7 +78,30 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("err pict")
 	}
 	fmt.Println("init")
-	fmt.Println(idmod, namemod, description, picture)
+	fmt.Println(idmod, namemod, description)
+	fmt.Println("-----")
+	cutstr := picture[23:]
+	fmt.Println(cutstr)
+	// fmt.Println(picture)
+	unbased, _ := base64.StdEncoding.DecodeString(cutstr)
+	res := bytes.NewReader(unbased)
+	jpgI, _ := jpeg.Decode(res)
+	out, err := os.Create("./myimg.jpg")
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	var opt jpeg.Options
+	opt.Quality = 100
+	// ok, write out the data into the new JPEG file
+
+	err = jpeg.Encode(out, jpgI, &opt)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
 }
 
 func AdminPanel(w http.ResponseWriter, r *http.Request) {

@@ -77,7 +77,7 @@ async function EDIT() {
 }
 
 
-function readURL(input) {
+async function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -124,8 +124,8 @@ function start() {
     })
 
 
-    $("#imgInp").change(function() {
-        readURL(this);
+    $("#imgInp").change(async function() {
+        await readURL(this);
     });
 
 
