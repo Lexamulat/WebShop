@@ -84,6 +84,8 @@ async function GetAndWriteAllContent() {
 function animate(elem) {
     var effect = elem.data("effect");
     elem.addClass("animated " + effect).one(animationEnd, function() {
+        // !! @animation end is not defined@
+        // Its Ok, at the beginning, the object doesnt have an animation attribute, thats why it cant to remove it
         elem.removeClass("animated" + effect);
     });
 }

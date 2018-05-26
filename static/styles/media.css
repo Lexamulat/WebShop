@@ -1,0 +1,23 @@
+@media screen and (max-width:769px) {
+    /* Attention at the space after @and@ */
+    .menu a {
+        display: none;
+    }
+    .menu a.menuicon {
+        display: block;
+    }
+    .card {
+        width: 90%;
+    }
+    .card-body {
+        font-size: 4vw;
+    }
+    .leftbtn {
+        font-size: 3vw;
+        padding: 0.5rem;
+    }
+    .rightbtn {
+        font-size: 3vw;
+        padding: 0.5rem;
+    }
+}
