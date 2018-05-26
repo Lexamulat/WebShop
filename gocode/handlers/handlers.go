@@ -14,6 +14,7 @@ import (
 	"os"
 	DataBase "shop/gocode/db"
 	Session "shop/gocode/session"
+	"strings"
 
 	"github.com/buger/jsonparser"
 )
@@ -80,13 +81,14 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("init")
 	fmt.Println(idmod, namemod, description)
 	fmt.Println("-----")
-	cutstr := picture[23:]
-	fmt.Println(cutstr)
+	coI := strings.Index(string(picture), ",") //eraise  from data:image/jpeg;base64,/9j/4AAQSkZJRgAB.....
+	cutstr := string(picture)[coI+1:]          // @data:image/jpeg;base64,@
+	// cutstr := picture[23:] the other way to eraise @data:image/jpeg;base64,@
 	// fmt.Println(picture)
 	unbased, _ := base64.StdEncoding.DecodeString(cutstr)
 	res := bytes.NewReader(unbased)
 	jpgI, _ := jpeg.Decode(res)
-	out, err := os.Create("./myimg.jpg")
+	out, err := os.Create("static/images/myimg.jpg")
 
 	if err != nil {
 		fmt.Println(err)
