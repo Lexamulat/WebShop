@@ -24,6 +24,14 @@ type BMenuStruct struct { //variables must begin with a capital
 	ImgPath     string `json:"ImgPath"`
 }
 
+func Mainhandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseGlob("static/html/*.html")
+	err := tmpl.ExecuteTemplate(w, "start.html", nil)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func GetBMenu(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := DataBase.DB.Query("select * from BMenu")
@@ -40,19 +48,55 @@ func GetBMenu(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(outJSON))
 
 }
-func Test(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseGlob("static/html/*.html")
-	err := tmpl.ExecuteTemplate(w, "test.html", nil)
+
+func AdminPanel(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-cache") //disable cache redirect
+	cook, err := r.Cookie("mycook")
 	if err != nil {
-		panic(err)
+		http.Redirect(w, r, "/log", 301)
+	} else {
+
+		var session string
+		err = DataBase.DB.QueryRow("select session from ClientsData where session = ?", cook.Value).Scan(&session)
+		if err == sql.ErrNoRows {
+			fmt.Println("session received from cookie dont found in db")
+			http.Redirect(w, r, "/log", 302)
+		} else {
+			tmpl, _ := template.ParseGlob("static/html/*.html")
+			err := tmpl.ExecuteTemplate(w, "redact.html", nil)
+			if err != nil {
+				panic(err)
+			}
+		}
 	}
 
 }
-func Mainhandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseGlob("static/html/*.html")
-	err := tmpl.ExecuteTemplate(w, "start.html", nil)
-	if err != nil {
-		panic(err)
+
+//take care of chrome cache
+
+func Log(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("static/html/log.html")
+		t.Execute(w, t)
+	} else {
+		login := r.PostFormValue("log")
+		pass := r.PostFormValue("pass")
+
+		//!TODO need to hash this data
+
+		var session string
+		err := DataBase.DB.QueryRow("select session from ClientsData where log = ? AND pass=?", login, pass).Scan(&session)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				fmt.Println("incorrect log or pass")
+				http.Redirect(w, r, "/log", 302)
+			} else {
+				log.Fatal(err)
+			}
+		}
+
+		Session.SetMyCook(w, login)
+		http.Redirect(w, r, "/red", 302)
 	}
 }
 
@@ -128,53 +172,21 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, strconv.Itoa(int(affected)))
 }
 
-func AdminPanel(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Cache-Control", "no-cache") //disable cache redirect
-	cook, err := r.Cookie("mycook")
+func BurgDel(w http.ResponseWriter, r *http.Request) {
+
+	bodyBytes, _ := ioutil.ReadAll(r.Body)
+
+	id, err := jsonparser.GetInt(bodyBytes, "id")
 	if err != nil {
-		http.Redirect(w, r, "/log", 301)
-	} else {
+		fmt.Println("err id")
+	}
+	res, err := DataBase.DB.Exec("DELETE FROM BMenu WHERE id = ?", strconv.Itoa(int(id)))
 
-		var session string
-		err = DataBase.DB.QueryRow("select session from ClientsData where session = ?", cook.Value).Scan(&session)
-		if err == sql.ErrNoRows {
-			fmt.Println("session received from cookie dont found in db")
-			http.Redirect(w, r, "/log", 302)
-		} else {
-			tmpl, _ := template.ParseGlob("static/html/*.html")
-			err := tmpl.ExecuteTemplate(w, "redact.html", nil)
-			if err != nil {
-				panic(err)
-			}
-		}
+	if err != nil {
+		log.Fatal(err)
 	}
 
-}
+	affected, _ := res.RowsAffected()
+	fmt.Fprintf(w, strconv.Itoa(int(affected)))
 
-//take care of chrome cache
-
-func Log(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
-		t, _ := template.ParseFiles("static/html/log.html")
-		t.Execute(w, t)
-	} else {
-		login := r.PostFormValue("log")
-		pass := r.PostFormValue("pass")
-
-		//!TODO need to hash this data
-
-		var session string
-		err := DataBase.DB.QueryRow("select session from ClientsData where log = ? AND pass=?", login, pass).Scan(&session)
-		if err != nil {
-			if err == sql.ErrNoRows {
-				fmt.Println("incorrect log or pass")
-				http.Redirect(w, r, "/log", 302)
-			} else {
-				log.Fatal(err)
-			}
-		}
-
-		Session.SetMyCook(w, login)
-		http.Redirect(w, r, "/red", 302)
-	}
 }

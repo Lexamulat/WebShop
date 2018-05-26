@@ -19,6 +19,19 @@ function Request(url, postData) {
 }
 //THIS synchro function returns promise by @return new Promise@
 
+function PushToast(res) {
+    if (res == "0") {
+        var x = document.getElementById("ErrorSnackbar")
+    } else {
+        var x = document.getElementById("SucseesSnackbar")
+    }
+    //Add the "show" class to DIV
+    x.className = "show";
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+
 async function WriteBmenu(BMenu) {
     console.log("WriteBmenu");
     console.log(BMenu);
@@ -36,7 +49,7 @@ async function WriteBmenu(BMenu) {
                     <p class="card-text ">${el.Description}</p>
                     <div class="redactbuttons">
                         <a class=" mybtn btn btn-primary edit" data-toggle="modal" data-target="#editModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Edit</a>
-                        <a class="delete" data-toggle="modal" data-target="#exampleModal">Del</a>
+                        <a class="delete" data-toggle="modal" data-target="#delModal" data-id=${el.Id}>Del</a>
                     </div>
                 </div>
             </div>
@@ -45,31 +58,31 @@ async function WriteBmenu(BMenu) {
     }
 }
 
-async function WriteSubMenu(BMenu) {
-    console.log("WriteBmenu");
-    console.log(BMenu);
+// async function WriteSubMenu(BMenu) {
+//     console.log("WriteBmenu");
+//     console.log(BMenu);
 
-    let list = $(".SubMenu") // . means class | #means id
-    list.empty();
+//     let list = $(".SubMenu") // . means class | #means id
+//     list.empty();
 
-    for (let i = 0; i < BMenu.length; i++) {
-        const el = BMenu[i];
+//     for (let i = 0; i < BMenu.length; i++) {
+//         const el = BMenu[i];
 
-        let listEl = `
-            <div class="card wow zoomIn" data-wow-duration="2s" >
-                <img class="card-img-top " src="${el.ImgPath}" alt="img">
-                <div class="card-body ">
-                    <h5 class="card-title ">${el.Name}</h5>
-                    <p class="card-text ">${el.Description}</p>
-                    <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#editModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
-                    </div>
-            </div>
-           `
-            // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important
-            // !! data-'all in lowercase'
-        list.append(listEl)
-    }
-}
+//         let listEl = `
+//             <div class="card wow zoomIn" data-wow-duration="2s" >
+//                 <img class="card-img-top " src="${el.ImgPath}" alt="img">
+//                 <div class="card-body ">
+//                     <h5 class="card-title ">${el.Name}</h5>
+//                     <p class="card-text ">${el.Description}</p>
+//                     <a href="#" class="mybtn btn btn-primary" data-toggle="modal" data-target="#editModal" data-id=${el.Id} data-name='${el.Name}' data-description='${el.Description}' data-img='${el.ImgPath}' >Go somewhere</a>
+//                     </div>
+//             </div>
+//            `
+//             // !! TAKE care of @data-name=${el.Name}@ and @data-name='${el.Name}'@  the difference in reading up to a blank in the first case. space after @data-name='${el.Name}'@ is very important
+//             // !! data-'all in lowercase'
+//         list.append(listEl)
+//     }
+// }
 
 
 async function GetAndWriteAllContent() {
@@ -102,16 +115,8 @@ async function MENUADD() {
 
     let res = await Request("BurgAdd", out)
         // document.getElementById("pictureForAddBurgsModal").setAttribute('src', "#");
-    console.log(res);
-    if (res == "0") {
-        var x = document.getElementById("ErrorSnackbar")
-    } else {
-        var x = document.getElementById("SucseesSnackbar")
-    }
-    //Add the "show" class to DIV
-    x.className = "show";
-    // After 3 seconds, remove the show class from DIV
-    setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+
+    await PushToast(res)
     await GetAndWriteAllContent();
 }
 
@@ -123,6 +128,16 @@ async function EDIT() {
         picture: picture.getAttribute('src')
     }
     let res = await Request("edit", out)
+    await PushToast(res)
+    await GetAndWriteAllContent();
+}
+
+
+async function MENUDELETE() {
+    let out = {
+        id: $('#delModal').data("id"),
+    }
+    let res = await Request("BurgDel", out)
     console.log(res);
     if (res == "0") {
         var x = document.getElementById("ErrorSnackbar")
@@ -204,6 +219,7 @@ async function start() {
 
     $("#MENUEDIT").click(EDIT)
     $("#MENUADD").click(MENUADD)
+    $("#MENUDELETE").click(MENUDELETE)
 }
 
 

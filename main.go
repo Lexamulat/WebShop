@@ -21,10 +21,10 @@ func main() {
 	router.HandleFunc("/BMenu", Handlers.GetBMenu).Methods("POST")
 	router.HandleFunc("/red", Handlers.AdminPanel)
 	router.HandleFunc("/log", Handlers.Log)
-	router.HandleFunc("/test", Handlers.Test)
 	router.HandleFunc("/edit", Handlers.Edit)
 
 	router.HandleFunc("/BurgAdd", Handlers.BurgAdd).Methods("POST")
+	router.HandleFunc("/BurgDel", Handlers.BurgDel).Methods("POST")
 
 	router.PathPrefix("/static/").Handler(s)
 
