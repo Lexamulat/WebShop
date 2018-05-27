@@ -96,84 +96,6 @@ li {
     display: none;
 }
 
-.burger {
-    height: 63vh;
-    background-image: url(/static/images/bigburg.jpg);
-    background-size: cover;
-    position: relative;
-}
-
-.BMenu {
-    width: 80%;
-    height: 100%;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.BMenu img {
-    max-width: 100%;
-    height: auto;
-    max-width: 100%;
-    height: auto;
-}
-
-.card {
-    margin: 10px;
-    width: 20%;
-    /* height: 20%; */
-    display: flex;
-    flex-direction: column;
-    box-sizing: content-box;
-}
-
-.card-img-top {
-    flex: 1;
-    align-self: center;
-}
-
-.card-body {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    justify-content: space-around;
-}
-
-.card-title {
-    flex: 1;
-}
-
-.card-text {
-    flex: 5;
-}
-
-.btnblock {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.btnblock a {
-    color: white;
-    /* color: black; */
-}
-
-.leftbtn {
-    flex: 1;
-    margin: 2px;
-    padding: 0.08rem 0.8rem;
-}
-
-.rightbtn {
-    flex: 1;
-    margin: 2px;
-    padding: 0.08rem 0.8rem;
-}
-
 .modalDialog {
     height: 100%;
     width: 100%;
@@ -263,4 +185,22 @@ li {
     position: absolute;
     transition: top 2s ease-out;
     transform: translate3d(0, 20px, 0);
+}
+
+.section_2 {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.card {
+    margin: 10px;
+    width: 15rem;
+}
+
+@media screen and (max-width: 769px) {
+    .card-body {
+        font-size: 2vw;
+    }
 }

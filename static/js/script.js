@@ -25,7 +25,7 @@ async function WriteBmenu(BMenu) {
     console.log("WriteBmenu");
     console.log(BMenu);
 
-    let list = $(".BurgsMenu") // . means class | #means id
+    let list = $(".BurgsMenu")
     list.empty();
 
     for (let i = 0; i < BMenu.length; i++) {
@@ -87,7 +87,7 @@ function AddToBasket($this) {
     } else {
         basket[id]++;
     }
-    console.log(basket)
+    localStorage.setItem("basket", JSON.stringify(basket))
 
 }
 async function start() {
@@ -114,6 +114,7 @@ async function start() {
         ResetAnimation($this);
         AddToBasket($(this))
     });
+
 
 
 }

@@ -97,8 +97,12 @@ func Log(w http.ResponseWriter, r *http.Request) {
 }
 
 func Basket(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("static/html/basket.html")
-	t.Execute(w, t)
+
+	tmpl, _ := template.ParseGlob("static/html/*.html")
+	err := tmpl.ExecuteTemplate(w, "basket.html", nil)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func BurgAdd(w http.ResponseWriter, r *http.Request) {
