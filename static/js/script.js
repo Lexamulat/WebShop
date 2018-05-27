@@ -88,9 +88,9 @@ async function start() {
 
     // !! The other way for animation (part 1)
     // Animate mobile menu
-    // $(".menuicon").click(function() {
-    //     animate($(".ModelContent"));
-    // });
+    //          $(".menuicon").click(function() {
+    //          animate($(".ModelContent"));
+    //          });
 
     $(".menuicon").click(function() {
 
