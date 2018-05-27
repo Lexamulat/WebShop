@@ -36,7 +36,7 @@ async function WriteBmenu(BMenu) {
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
-                <li class="list-group-item ">Dapibus ac facilisis in</li>
+                <li class="list-group-item ">Цена: ${el.Price}руб.</li>
                 <a  class="mybtn btn btn-success addbasket" data-id=${el.Id} >В корзину</a>
             </div>
         </div>
@@ -82,6 +82,10 @@ window.onscroll = () => {
 }
 
 function AddToBasket($this) {
+    if (localStorage.getItem('basket') != null) {
+
+        basket = JSON.parse(localStorage.getItem("basket"))
+    }
     var id = $this.data("id")
     if (basket[id] == undefined) {
         basket[id] = 1;

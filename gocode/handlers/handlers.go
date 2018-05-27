@@ -23,6 +23,7 @@ type BMenuStruct struct { //variables must begin with a capital
 	Name        string `json:"Name"`
 	Description string `json:"Description"`
 	ImgPath     string `json:"ImgPath"`
+	Price       string `json:"Price"`
 }
 
 func Mainhandler(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +43,7 @@ func GetBMenu(w http.ResponseWriter, r *http.Request) {
 	el := []BMenuStruct{}
 	var temp BMenuStruct
 	for rows.Next() {
-		rows.Scan(&temp.ID, &temp.Name, &temp.Description, &temp.ImgPath)
+		rows.Scan(&temp.ID, &temp.Name, &temp.Description, &temp.ImgPath, &temp.Price)
 		el = append(el, temp)
 	}
 	outJSON, _ := json.Marshal(el)
@@ -117,7 +118,7 @@ func GetOrder(w http.ResponseWriter, r *http.Request) {
 
 	var preQueryString string
 	preQueryString = strings.Join(arr, ",")
-	fmt.Println(preQueryString)
+
 	//!! We wana make smth like this "SELECT * FROM BMenu WHERE id IN (3,4,5)"
 	queryString := "SELECT * FROM BMenu WHERE id IN (" + preQueryString + ")"
 	rows, err := DataBase.DB.Query(queryString)
@@ -128,7 +129,7 @@ func GetOrder(w http.ResponseWriter, r *http.Request) {
 	el := []BMenuStruct{}
 	var temp BMenuStruct
 	for rows.Next() {
-		rows.Scan(&temp.ID, &temp.Name, &temp.Description, &temp.ImgPath)
+		rows.Scan(&temp.ID, &temp.Name, &temp.Description, &temp.ImgPath, &temp.Price)
 		el = append(el, temp)
 	}
 
