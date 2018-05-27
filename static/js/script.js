@@ -36,7 +36,7 @@ async function WriteBmenu(BMenu) {
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
-                <a href="# " class="mybtn btn btn-success" data-id=${el.Id} >В корзину</a>
+                <a  class="mybtn btn btn-success addbasket" data-id=${el.Id} >В корзину</a>
             </div>
         </div>
        `
@@ -56,24 +56,27 @@ async function GetAndWriteAllContent() {
 }
 //animate menu for mobiles
 function animate(elem) {
+    console.log(elem)
     var effect = elem.data("effect");
-    elem.addClass("animated " + effect).one(animationEnd, function() {
+    elem.addClass("animated " + effect).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
         // !! @animation end is not defined@
         // Its Ok, at the beginning, the object doesnt have an animation attribute, thats why it cant to remove it
-        elem.removeClass("animated" + effect);
+        // elem.removeClass("animated" + effect);
+        setTimeout(function() { $(elem).removeClass("animated" + effect); }, 999)
     });
 }
 
-
+function reset($elem) {
+    $elem.before($elem.clone(true));
+    var $newElem = $elem.prev();
+    $elem.remove();
+    return $newElem;
+}
 
 window.onscroll = () => {
-        let b = document.getElementsByClassName("basket")[0]
-        b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
-    }
-    () => {
-        let b = document.getElementsByClassName("basket")[0]
-        b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
-    }
+    let b = document.getElementsByClassName("basket")[0]
+    b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
+}
 
 
 
@@ -88,7 +91,18 @@ async function start() {
     });
 
 
+    $(".addbasket").click(function() {
+        animate($(".basketfon"));
+        var $this = ($(".basketfon"));
+        $this.removeClass("animated bounce");
+        $this = reset($this);
+        $this.addClass("animated bounce");
+    });
+
 }
+
+
+
 
 
 
