@@ -5,11 +5,11 @@ function CheckAndDisplayBasket() {
         basket = JSON.parse(localStorage.getItem("basket"))
     }
     console.log(basket)
-    var out = '';
-    for (var i in basket) {
-        out += basket[i]
-    }
-    $(".BasketList").html(out);
+        // var out = '';
+        // for (var i in basket) {
+        //     out += basket[i]
+        // }
+        // $(".BasketList").html(out);
 }
 
 function ResetAnimation($elem) {

@@ -20,4 +20,20 @@
         font-size: 3vw;
         padding: 0.5rem;
     }
+    .svgicon {
+        width: 1em;
+        height: 1em;
+    }
+    .basketfon {
+        width: 2em;
+        height: 2em;
+    }
+    .basketfonback {
+        right: 3vh;
+        width: 2em;
+        height: 2em;
+    }
+    .basket {
+        height: 2em;
+    }
 }

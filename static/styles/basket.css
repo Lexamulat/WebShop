@@ -20,11 +20,15 @@ li {
     width: 100%;
 }
 
-.widesection_2 {
-    height: 100%;
-    width: 100%;
-    /* display: block; */
-}
+
+/* .widesection_2 {
+    display: flex;
+     height: 100%;
+    width: 100%; 
+     display: block; 
+     width: 100vh;
+    height: 100vh; 
+} */
 
 .CustomCentered {
     display: flex;
@@ -149,21 +153,6 @@ li {
     fill: white;
 }
 
-.basketfon {
-    z-index: 2;
-    position: fixed;
-    right: 3vh;
-    width: 4.5em;
-    height: 4.5em;
-    background-color: crimson;
-    border-radius: 6em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* z-index: -1; */
-    /* display: none; */
-}
-
 .basketfonback {
     z-index: 2;
     position: fixed;
@@ -189,18 +178,72 @@ li {
 
 .section_2 {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    margin: auto;
 }
 
 .card {
-    margin: 10px;
+    margin: 3vh;
     width: 15rem;
+}
+
+.svgicon {
+    z-index: 2;
+    width: 3em;
+    height: 3em;
+    stroke-width: 0;
+    fill: white;
+}
+
+.svgiconplus {
+    margin: 0 auto;
+    width: 1.5em;
+    height: 1.5em;
+    fill: black;
+}
+
+
+/* .plusBackGround {
+    background-color: crimson;
+    width: inherit;
+} */
+
+.redactbuttons {
+    flex: 2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.minus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 769px) {
     .card-body {
         font-size: 2vw;
+    }
+    .svgiconplus {
+        width: 1em;
+        height: 1em;
+    }
+    .svgicon {
+        width: 1em;
+        height: 1em;
+    }
+    .basketfonback {
+        right: 3vh;
+        width: 2em;
+        height: 2em;
+    }
+    .basket {
+        height: 2em;
     }
 }
