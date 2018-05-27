@@ -1,15 +1,43 @@
 var basket = {};
 
-function CheckAndDisplayBasket() {
-    if (localStorage.getItem("basket") != null) {
-        basket = JSON.parse(localStorage.getItem("basket"))
+function Request(url, postData) {
+    return new Promise(resolve => {
+        $.post(url, JSON.stringify(postData), function(data, textStatus) {
+            resolve(data)
+        }, "json");
+    });
+}
+
+
+async function Write(cont) {
+
+    let list = $(".BasketList")
+    list.empty();
+
+    for (let l = 0; l < cont.length; l++) {
+        const el = cont[l];
+        let listEl = `<li>${el.Name}</li>`
+        list.append(listEl)
     }
-    console.log(basket)
-        // var out = '';
-        // for (var i in basket) {
-        //     out += basket[i]
-        // }
-        // $(".BasketList").html(out);
+}
+
+async function CheckAndDisplayBasket() {
+    if (localStorage.getItem('basket') != null) {
+
+        basket = JSON.parse(localStorage.getItem("basket"))
+        var arr = [];
+
+        for (var i in basket) {
+            arr.push(i)
+        }
+
+        const cont = await Request("getOrder", arr)
+        console.log(cont)
+        await Write(cont)
+
+    } else {
+        console.log("bask empty")
+    }
 }
 
 function ResetAnimation($elem) {
@@ -25,9 +53,9 @@ window.onscroll = () => {
     b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
 }
 
-function start() {
+async function start() {
     console.log("start")
-    CheckAndDisplayBasket()
+    await CheckAndDisplayBasket()
     $(".menuicon").click(function() {
 
         var $this = ($(".ModelContent"));

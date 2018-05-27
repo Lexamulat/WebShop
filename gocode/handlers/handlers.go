@@ -12,6 +12,7 @@ import (
 	Session "shop/gocode/session"
 	SupportPackage "shop/gocode/support"
 	"strconv"
+	"strings"
 
 	"github.com/buger/jsonparser"
 )
@@ -103,6 +104,37 @@ func Basket(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func GetOrder(w http.ResponseWriter, r *http.Request) {
+	bodyBytes, _ := ioutil.ReadAll(r.Body)
+	var arr []string
+
+	jsonparser.ArrayEach(bodyBytes, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
+		t, _ := jsonparser.GetInt(value)
+		arr = append(arr, strconv.Itoa(int(t)))
+	})
+
+	var preQueryString string
+	preQueryString = strings.Join(arr, ",")
+	fmt.Println(preQueryString)
+	//!! We wana make smth like this "SELECT * FROM BMenu WHERE id IN (3,4,5)"
+	queryString := "SELECT * FROM BMenu WHERE id IN (" + preQueryString + ")"
+	rows, err := DataBase.DB.Query(queryString)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	el := []BMenuStruct{}
+	var temp BMenuStruct
+	for rows.Next() {
+		rows.Scan(&temp.ID, &temp.Name, &temp.Description, &temp.ImgPath)
+		el = append(el, temp)
+	}
+
+	outJSON, _ := json.Marshal(el)
+	fmt.Fprintf(w, string(outJSON))
+
 }
 
 func BurgAdd(w http.ResponseWriter, r *http.Request) {

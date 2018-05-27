@@ -36,6 +36,7 @@ async function WriteBmenu(BMenu) {
             <div class="card-body ">
                 <h5 class="card-title ">${el.Name}</h5>
                 <p class="card-text ">${el.Description}</p>
+                <li class="list-group-item ">Dapibus ac facilisis in</li>
                 <a  class="mybtn btn btn-success addbasket" data-id=${el.Id} >В корзину</a>
             </div>
         </div>
@@ -56,23 +57,23 @@ async function GetAndWriteAllContent() {
 }
 // !! The other way for animation (part 2)
 //animate menu for mobiles
-// function animate(elem) {
-//     var effect = elem.data("effect");
-//     elem.addClass("animated " + effect).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-//         // !! @animation end is not defined@
-//         // Its Ok, at the beginning, the object doesnt have an animation attribute, thats why it cant to remove it
-//         elem.removeClass("animated" + effect);
+function animate(elem) {
+    var effect = elem.data("effect");
+    elem.addClass("animated " + effect).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        // !! @animation end is not defined@
+        // Its Ok, at the beginning, the object doesnt have an animation attribute, thats why it cant to remove it
+        elem.removeClass("animated " + effect);
 
-//     });
-// }
-
-function ResetAnimation($elem) {
-    var effect = $elem.data("effect")
-    $elem.before($elem.clone(true));
-    var $newElem = $elem.prev();
-    $elem.remove();
-    $newElem.addClass("animated " + effect);
+    });
 }
+
+// function ResetAnimation($elem) {
+//     var effect = $elem.data("effect")
+//     $elem.before($elem.clone(true));
+//     var $newElem = $elem.prev();
+//     $elem.remove();
+//     $newElem.addClass("animated " + effect);
+// }
 
 // for basket animation
 window.onscroll = () => {
@@ -96,22 +97,23 @@ async function start() {
 
     // !! The other way for animation (part 1)
     // Animate mobile menu
-    //          $(".menuicon").click(function() {
-    //          animate($(".ModelContent"));
-    //          });
-
     $(".menuicon").click(function() {
-
-        var $this = ($(".ModelContent"));
-        ResetAnimation($this);
-
-
+        animate($(".ModelContent"));
     });
+
+    // $(".menuicon").click(function() {
+
+    //     var $this = ($(".ModelContent"));
+    //     ResetAnimation($this);
+
+
+    // });
 
     //for dynamic blocks its better to use .on
     $('.addbasket').on('click', function() {
         var $this = ($(".basketfon"));
-        ResetAnimation($this);
+        animate($(".basketfon"));
+        // ResetAnimation($this);
         AddToBasket($(this))
     });
 

@@ -23,6 +23,7 @@ func main() {
 	router.HandleFunc("/log", Handlers.Log)
 	router.HandleFunc("/edit", Handlers.Edit)
 	router.HandleFunc("/basket", Handlers.Basket)
+	router.HandleFunc("/getOrder", Handlers.GetOrder)
 
 	router.HandleFunc("/BurgAdd", Handlers.BurgAdd).Methods("POST")
 	router.HandleFunc("/BurgDel", Handlers.BurgDel).Methods("POST")
