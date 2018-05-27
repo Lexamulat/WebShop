@@ -54,49 +54,56 @@ async function GetAndWriteAllContent() {
 
 
 }
+// !! The other way for animation (part 2)
 //animate menu for mobiles
-function animate(elem) {
-    console.log(elem)
-    var effect = elem.data("effect");
-    elem.addClass("animated " + effect).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-        // !! @animation end is not defined@
-        // Its Ok, at the beginning, the object doesnt have an animation attribute, thats why it cant to remove it
-        // elem.removeClass("animated" + effect);
-        setTimeout(function() { $(elem).removeClass("animated" + effect); }, 999)
-    });
-}
+// function animate(elem) {
+//     var effect = elem.data("effect");
+//     elem.addClass("animated " + effect).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+//         // !! @animation end is not defined@
+//         // Its Ok, at the beginning, the object doesnt have an animation attribute, thats why it cant to remove it
+//         elem.removeClass("animated" + effect);
 
-function reset($elem) {
+//     });
+// }
+
+function resetAnimation($elem) {
+    var effect = $elem.data("effect")
     $elem.before($elem.clone(true));
     var $newElem = $elem.prev();
     $elem.remove();
-    return $newElem;
+    $newElem.addClass("animated " + effect);
 }
 
+//for basket animation
 window.onscroll = () => {
     let b = document.getElementsByClassName("basket")[0]
     b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
 }
-
-
 
 async function start() {
 
 
     console.log("start");
     await GetAndWriteAllContent();
+
+    // !! The other way for animation (part 1)
     // Animate mobile menu
+    // $(".menuicon").click(function() {
+    //     animate($(".ModelContent"));
+    // });
+
     $(".menuicon").click(function() {
-        animate($(".ModelContent"));
+
+        var $this = ($(".ModelContent"));
+        resetAnimation($this);
+
     });
 
 
     $(".addbasket").click(function() {
-        animate($(".basketfon"));
         var $this = ($(".basketfon"));
-        $this.removeClass("animated bounce");
-        $this = reset($this);
-        $this.addClass("animated bounce");
+        resetAnimation($this);
+
     });
 
 }
