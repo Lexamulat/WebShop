@@ -66,7 +66,7 @@ async function GetAndWriteAllContent() {
 //     });
 // }
 
-function resetAnimation($elem) {
+function ResetAnimation($elem) {
     var effect = $elem.data("effect")
     $elem.before($elem.clone(true));
     var $newElem = $elem.prev();
@@ -74,15 +74,23 @@ function resetAnimation($elem) {
     $newElem.addClass("animated " + effect);
 }
 
-//for basket animation
+// for basket animation
 window.onscroll = () => {
     let b = document.getElementsByClassName("basket")[0]
     b.style.top = window.pageYOffset + window.innerHeight - 200 + "px"
 }
 
+function AddToBasket($this) {
+    var id = $this.data("id")
+    if (basket[id] == undefined) {
+        basket[id] = 1;
+    } else {
+        basket[id]++;
+    }
+    console.log(basket)
+
+}
 async function start() {
-
-
     console.log("start");
     await GetAndWriteAllContent();
 
@@ -95,21 +103,23 @@ async function start() {
     $(".menuicon").click(function() {
 
         var $this = ($(".ModelContent"));
-        resetAnimation($this);
+        ResetAnimation($this);
+
 
     });
 
-
-    $(".addbasket").click(function() {
+    //for dynamic blocks its better to use .on
+    $('.addbasket').on('click', function() {
         var $this = ($(".basketfon"));
-        resetAnimation($this);
-
+        ResetAnimation($this);
+        AddToBasket($(this))
     });
+
 
 }
 
 
-
+var basket = {};
 
 
 
