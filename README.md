@@ -9,5 +9,7 @@ Golang
 TODO LITS{
 -https(set.CookHttpsOnly)
 -hash log pass
+-refact code
+-divide files
 -add try catch bloks
 }
