@@ -6,10 +6,12 @@ To begin with:
 
 
 DESCRIPTION:
+
 1.  All pages is fully adaptive
-     You can scrollpage, change screen size.
-      Try to buy smth and then click on shopping cart(it is also located at: http://localhost:8080/basket) .(buttons associated with changing the quantity of goods in progress)
-2. Chek for "Admin panel"  http://localhost:8080/red
+2.You can scrollpage, change screen size.
+3.Try to buy smth and then click on shopping cart(it is also located at: http://localhost:8080/basket).(buttons associated with changing the quantity of goods in progress).
+
+4. Chek for "Admin panel"  http://localhost:8080/red
 you will be redirected to  http://localhost:8080/log
 Log: www
 Pass: 123
