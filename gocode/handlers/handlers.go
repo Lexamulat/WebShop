@@ -26,6 +26,12 @@ type BMenuStruct struct { //variables must begin with a capital
 	Price       string `json:"Price"`
 }
 
+func Test(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("static/html/test.html")
+	t.Execute(w, t)
+
+}
+
 func Mainhandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseGlob("static/html/*.html")
 	err := tmpl.ExecuteTemplate(w, "start.html", nil)

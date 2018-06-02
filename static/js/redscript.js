@@ -154,9 +154,6 @@ async function readURLAdd(input) {
 
 async function start() {
 
-
-
-
     console.log("start");
     await GetAndWriteAllContent();
 
@@ -165,8 +162,6 @@ async function start() {
     $(".menuicon").click(function() {
         animate($(".ModelContent"));
     });
-
-
 
     $('#editModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget)
@@ -181,6 +176,7 @@ async function start() {
         $("#picture").attr("src", EditingPicture)
         $(this).data('id', EditingId)
     })
+
     $('#delModal').on('show.bs.modal', function(event) {
         let button = $(event.relatedTarget)
         let EditingId = button.data('id')

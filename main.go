@@ -24,6 +24,7 @@ func main() {
 	router.HandleFunc("/edit", Handlers.Edit)
 	router.HandleFunc("/basket", Handlers.Basket)
 	router.HandleFunc("/getOrder", Handlers.GetOrder)
+	router.HandleFunc("/test", Handlers.Test)
 
 	router.HandleFunc("/BurgAdd", Handlers.BurgAdd).Methods("POST")
 	router.HandleFunc("/BurgDel", Handlers.BurgDel).Methods("POST")
@@ -31,12 +32,12 @@ func main() {
 	router.PathPrefix("/static/").Handler(s)
 
 	fmt.Println("test")
-	log.Fatal(http.ListenAndServe(":9999", router))
+	log.Fatal(http.ListenAndServe(":8080", router))
 	/////////////////////////////////////////////////
 	// 1)Get img.jpg from folder.
 	// 2)Save in db.
 	// 3)Get from db.
-	// 4)Save in folder
+	// 4)Save in folderёё
 	// //////////////////////////////////////////////
 	// // img
 	// file, err := os.Open("static/images/burg.jpg")
