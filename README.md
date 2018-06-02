@@ -1,3 +1,6 @@
+I picked up my server, so you can visit http://95.213.199.182:8080/
+
+
 To begin with:
 
 1) run the file main.exe
